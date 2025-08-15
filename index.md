@@ -1,12 +1,12 @@
 ---
 layout: base
-title: I'm [Your Full Name]
+title: I'm Aneesh Deevi
 hide: true
 ---
 
 ### Me and Team
 
-Hi! My name is [Your Full Name].
+Hi! My name is Aneesh Deevi.
 
 | Role         | Name     | Repo Location                       | Stream                | Repo Name |
 |--------------|----------|-------------------------------------|-----------------------|-----------|
@@ -58,4 +58,34 @@ Hi! My name is [Your Full Name].
 ## Truth or False?
 ---
 ### Do you live in California?
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px;">
+    <div class="button" 
+         style="background: linear-gradient(145deg, #16a085, #1abc9c); color: white; padding: 12px 24px; border-radius: 10px; font-weight: bold; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); cursor: pointer;"
+         onclick="alert('You answered YES')">
+        Yes
+    </div>
+
+    <div class="button" 
+         style="background: linear-gradient(145deg, #e74c3c, #ff6b6b); color: white; padding: 12px 24px; border-radius: 10px; font-weight: bold; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); cursor: pointer;"
+         onclick="alert('You answered NO')">
+        No
+    </div>
+</div>
+
+<style>
+  /* Hover effect on the buttons */
+  .button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .button {
+    display: inline-block;
+    font-size: 16px;
+    text-align: center;
+    user-select: none; /* Prevent accidental text selection */
+  }
+</style>
+
 
