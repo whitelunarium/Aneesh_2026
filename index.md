@@ -58,6 +58,4 @@ Hi! My name is [Your Full Name].
 ## Truth or False?
 ---
 ### Do you live in California?
-<button onclick="alert('You clicked Yes')">Yes</button>
-<button onclick="alert('You clicked No')">No</button>
 
