@@ -73,6 +73,48 @@ Hi! My name is Aneesh Deevi.
     </div>
 </div>
 
+### Did or do you major Computer Science?
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px;">
+    <div class="button" 
+         style="background: linear-gradient(145deg, #16a085, #1abc9c); color: white; padding: 12px 24px; border-radius: 10px; font-weight: bold; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); cursor: pointer;"
+         onclick="alert('You answered YES')">
+        Yes
+    </div>
+
+    <div class="button" 
+         style="background: linear-gradient(145deg, #e74c3c, #ff6b6b); color: white; padding: 12px 24px; border-radius: 10px; font-weight: bold; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); cursor: pointer;"
+         onclick="alert('You answered NO')">
+        No
+    </div>
+</div>
+
+### What is your name?
+
+<input type="text" id="name" placeholder="Enter your name" 
+       style="padding: 8px; border-radius: 6px; border: 1px solid #ccc; margin-right: 10px;">
+<div class="button" 
+     style="background: linear-gradient(145deg, #3498db, #2980b9); color: white; padding: 10px 20px; border-radius: 10px; font-weight: bold; cursor: pointer; display: inline-block;"
+     onclick="calculateName()">
+    Submit
+</div>
+
+<script>
+  function calculateName() {
+    const name = document.getElementById('name').value.trim();
+    if (!name) {
+      alert("Please enter your name first!");
+      return;
+    }
+    alert("Calculating your name...");
+    setTimeout(() => {
+      alert("Your name is: " + name);
+    }, 1500); // delay in milliseconds
+  }
+</script>
+
+
+
 <style>
   /* Hover effect on the buttons */
   .button:hover {
