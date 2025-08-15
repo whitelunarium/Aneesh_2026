@@ -4,10 +4,9 @@ title: I'm [Your Full Name]
 hide: true
 ---
 
-<!-- Button Styles Explanation -->
-#### About Button Styles
+### Me and Team
 
-Hi! My name is [Your Full Name].  Here is my team.
+Hi! My name is [Your Full Name].
 
 | Role         | Name     | Repo Location                       | Stream                | Repo Name |
 |--------------|----------|-------------------------------------|-----------------------|-----------|
@@ -15,6 +14,9 @@ Hi! My name is [Your Full Name].  Here is my team.
 | Scrummer     | Torin    | github.com/torin/student            | downstream (fork)     | student   |
 | Scrummer     | Avantika | github.com/avantika/student         | downstream (fork)     | student   |
 | Scrummer     | Aadit    | github.com/aaadit/student           | downstream (fork)     | student   |
+
+
+## Links to Learning
 
 ### Development Environment
 
