@@ -1,22 +1,18 @@
-[---
+---
 layout: post
 title: About
 permalink: /about/
 comments: true
 ---
 
-## As a conversation Starter
-
-Here are some places I have lived.
+Here are some places that relate to me.
 
 <comment>
 Flags are made using Wikipedia images
 </comment>
 
 <style>
-    /* Style looks pretty compact, 
-       - grid-container and grid-item are referenced the code 
-    */
+    /* Style looks pretty compact, trace grid-container and grid-item in the code */
     .grid-container {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Dynamic columns */
@@ -33,7 +29,7 @@ Flags are made using Wikipedia images
     .grid-item p {
         margin: 5px 0; /* Add some margin for spacing */
     }
-
+    
     .image-gallery {
         display: flex;
         flex-wrap: nowrap;
@@ -48,7 +44,7 @@ Flags are made using Wikipedia images
     }
 </style>
 
-<!-- This grid_container class is used by CSS styling and the id is used by JavaScript connection -->
+<!-- This grid_container class is for the CSS styling, the id is for JavaScript connection -->
 <div class="grid-container" id="grid_container">
     <!-- content will be added here by JavaScript -->
 </div>
@@ -60,12 +56,12 @@ Flags are made using Wikipedia images
     // 2. Define a JavaScript object for our http source and our data rows for the Living in the World grid
     var http_source = "https://upload.wikimedia.org/wikipedia/commons/";
     var living_in_the_world = [
-        {"flag": "0/01/Flag_of_California.svg", "greeting": "Hey", "description": "California - forever"},
-        {"flag": "b/b9/Flag_of_Oregon.svg", "greeting": "Hi", "description": "Oregon - 9 years"},
-        {"flag": "b/be/Flag_of_England.svg", "greeting": "Alright mate", "description": "England - 2 years"},
-        {"flag": "e/ef/Flag_of_Hawaii.svg", "greeting": "Aloha", "description": "Hawaii - 2 years"},
-    ];
-
+        {"flag": "a/a9/Flag_of_the_United_States_%28DoS_ECA_Color_Standard%29.svg", "greeting": "Hey", "description": "California - forever"},
+        {"flag": "4/41/Flag_of_India.svg", "greeting": "Namaste", "description": "India - Parent's birthplace"},
+        {"flag": "1/19/Flag_of_San_Diego%2C_California.svg", "greeting": "Hi", "description": "San Diego - My birthplace"},
+        {"flag": "e/ef/Flag_of_Hawaii.svg", "greeting": "Aloha", "description": "Hawaii - My favorite vacation place"},
+    ]; 
+    
     // 3a. Consider how to update style count for size of container
     // The grid-template-columns has been defined as dynamic with auto-fill and minmax
 
@@ -97,43 +93,41 @@ Flags are made using Wikipedia images
     }
 </script>
 
-### Journey through Life
-
-Here is what I did at those places
-
-- 🏫 Lots of Elementary Schools in Tucson, LA, Honolulu, and Glendale (CA)
-- 🏫 Middle and High School in Glendale (CA), Hoover High graduated '77
-- 🎓 Glendale CA Community College, UCLA Extension, LA Wilshire Computer Tech School '77 to '79
-- ⛪ England, London Missionary for Church of Jesus Christ of Latter-day Saints '79 to '81
-- 💼 Culver City, Glendale CA founder at Ashton-Tate, original PC's dBase 2 and 3 '82 to '87
-- 🎓 Eugene Oregon Undergraduate CompSci Degree at University of Oregon (Go Ducks!) '89 to '91
-- 💼 Eugene Oregon, founder and owner @ Microniche `88, Point Control CAD CAM developer '91 to '96
-- 🏢 San Diego CA Qualcomm, Satellite Comm and 1st Mobile OS (BREW) '96 to '19
-- 👨‍🏫 San Diego CA Teacher of Computer Science @ Del Norte High School San Diego '19 to present
-
-### Culture, Family, and Fun
+### My Life
 
 Everything for me, as for many others, revolves around family and faith.
 
-- My mother told me that I was Danish, English. and Irish, here is my researched [family tree]({{site.baseurl}}/images/about/familytree.png)
-- My family is pretty big as I have been married twice, my 1st wife passed away.  We have had 5 kids, 4 adopted by me, 1 biological.  Plus, there are three grandkids.  My name to my grandkids is Abuilito.
+- My mother told me that I was Indian.
+- The time I spend with my family and friends are the best, I always look forward to those moments.
+- My brother is my role model.
+- I love going on vacations and trying new cuisines.
+- I think cars are really cool.
+- Basketball is my favorite sport.
 - The gallery of pics has some of my family, fun, culture and faith memories.
 
 <comment>
 Gallery of Pics, scroll to the right for more ...
 </comment>
 <div class="image-gallery">
-  <img src="{{site.baseurl}}/images/about/missionary.jpg" alt="Image 1">
-  <img src="{{site.baseurl}}/images/about/john_tamara.jpg" alt="Image 2">
-  <img src="{{site.baseurl}}/images/about/tamara_fam.jpg" alt="Image 3">
-  <img src="{{site.baseurl}}/images/about/surf.jpg" alt="Image 4">
-  <img src="{{site.baseurl}}/images/about/john_lora.jpg" alt="Image 5">
-  <img src="{{site.baseurl}}/images/about/lora_fam.jpg" alt="Image 6">
-  <img src="{{site.baseurl}}/images/about/lora_fam2.jpg" alt="Image 7">
-  <img src="{{site.baseurl}}/images/about/pj_party.jpg" alt="Image 8">
-  <img src="{{site.baseurl}}/images/about/trent_family.png" alt="Image 9">
-  <img src="{{site.baseurl}}/images/about/claire.jpg" alt="Image 10">
-  <img src="{{site.baseurl}}/images/about/grandkids.jpg" alt="Image 11">
-  <img src="{{site.baseurl}}/images/about/farm.jpg" alt="Image 12">
+  <img src="{{site.baseurl}}/images/about/IMG_0389.jpg" alt="Image 1">
+  <img src="{{site.baseurl}}/images/about/IMG_0306.jpg" alt="Image 2">
+  <img src="{{site.baseurl}}/images/about/IMG_0758.jpg" alt="Image 3">
+  <img src="{{site.baseurl}}/images/about/IMG_0750.jpg" alt="Image 4">
+  <img src="{{site.baseurl}}/images/about/IMG_0728.jpg" alt="Image 5">
+  <img src="{{site.baseurl}}/images/about/IMG_0745.jpg" alt="Image 6">
+  <img src="{{site.baseurl}}/images/about/IMG_0276.jpg" alt="Image 7">
+  <img src="{{site.baseurl}}/images/about/basketball.jpeg" alt="Image 8">
 </div>
-](https://whitelunarium.github.io/student/)
+
+<!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="{{ site.github_username }}/{{ site.github_repo | default: site.baseurl | remove: "/" }}"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+<a href = "https://whitelunarium.github.io/Aneesh_2025/interests/">
+<button> Click this button to learn about my Interests</button>
+</a>
