@@ -45,8 +45,21 @@ Hi! My name is Aneesh Deevi.
 <a href="{{site.baseurl}}/turtle" class="button small" style="background-color: #2A7DB1">
     <span style="color: #000000">Turtle</span>
 </a>
+<a href="{{site.baseurl}}/background" class="button small" style="background-color: #b93d3dff">
+    Moving Background
+</a>
 
 <br>
+
+### Blogs
+
+<a href="{{ site.baseurl }}/blogs/blog1" 
+   class="button small" 
+   style="background-color: #E0F0FF; color: #1A4F8B; padding: 10px 20px; border-radius: 8px; font-weight: bold; text-decoration: none;">
+    Review Blog
+</a>
+
+
 
 <!-- Contact Section -->
 ### Get in Touch
