@@ -73,6 +73,7 @@ HTML implementation of the calculator.
       <div class="calculator-number">0</div>
       <div class="calculator-number">.</div>
       <div class="calculator-equals">=</div>
+      <div class="calculator-operation">/</div>
   </div>
 </div>
 
