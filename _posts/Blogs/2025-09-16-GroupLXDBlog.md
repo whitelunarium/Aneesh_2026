@@ -4,7 +4,7 @@ toc: True
 breadcrumb: True
 title: LXD Group Blog
 description: My first blog in CSP 2025-26
-permalink: /blogs/blog2
+permalink: /blogs/LxD_Group
 author: Tanay Paranjpe 
 ---
 
@@ -59,6 +59,9 @@ body {
 /* ------------------- Game Canvas ------------------- */
 #gameCanvas { display:block; margin:1rem auto; background:#222; border:2px solid #4f46e5; border-radius:10px; }
 
+/* ------------------- Reflection ------------------- */
+#reflection { display:none; background:#111; border-left:5px solid #4ade80; padding:30px; border-radius:15px; margin-top:30px; }
+
 /* ------------------- Responsive ------------------- */
 @media (max-width:768px) { .hero h1{ font-size:2rem; } .theme-selector, .theme-buttons{ grid-template-columns:1fr; } }
 </style>
@@ -112,7 +115,7 @@ body {
 <div class="content-card">
 <h2 class="section-title"><span class="icon">🔧</span>Step-by-Step Implementation</h2>
 
-<!-- Step 1 -->
+<!-- Steps 1-3 (unchanged) -->
 <div class="step">
 <span class="step-number">1</span>
 <strong>Create Theme Directory Structure</strong>
@@ -127,7 +130,6 @@ mkdir -p _themes/text/_layouts</pre>
 </div>
 </div>
 
-<!-- Step 2 -->
 <div class="step">
 <span class="step-number">2</span>
 <strong>Set Up Theme Configurations</strong>
@@ -144,7 +146,6 @@ use_opencs_layout: true</pre>
 </div>
 </div>
 
-<!-- Step 3 -->
 <div class="step">
 <span class="step-number">3</span>
 <strong>Create the Makefile</strong>
@@ -178,10 +179,15 @@ use-text:
 <div class="interactive-demo">
 <h3>🎯 Layout Override Game</h3>
 <canvas id="gameCanvas" width="500" height="400"></canvas>
-<p>Move the paddle with your mouse to catch falling layouts.</p>
+<p>Move the paddle with your mouse to catch falling layouts. Reach 10 layouts to unlock the Reflection section!</p>
 </div>
 
+<!-- Reflection Section -->
+<div id="reflection">
+<h2 class="section-title"><span class="icon">📝</span>Reflection</h2>
+<p>Congratulations! You’ve completed the Layout Override Game. Reflect on what you learned about Jekyll theme switching, file hierarchy, and interactive design. How can these principles help you in future web development projects?</p>
 </div>
+
 </div>
 
 <script>
@@ -197,6 +203,7 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 let x = canvas.width/2, y=30, dy=2, caught=0;
 let paddleX = (canvas.width-100)/2;
+const target = 10; // layouts to catch to unlock reflection
 
 canvas.addEventListener("mousemove", e=>{
     const rect = canvas.getBoundingClientRect();
@@ -206,11 +213,25 @@ canvas.addEventListener("mousemove", e=>{
 function drawPaddle(){ ctx.fillStyle="#4f46e5"; ctx.fillRect(paddleX,canvas.height-20,100,10); }
 function drawLayout(){ ctx.beginPath(); ctx.arc(x,y,15,0,Math.PI*2); ctx.fillStyle="#f59e0b"; ctx.fill(); ctx.closePath();}
 function drawScore(){ ctx.font="16px Arial"; ctx.fillStyle="#e2e8f0"; ctx.fillText("Layouts Caught: "+caught,8,20);}
-function draw(){ ctx.clearRect(0,0,canvas.width,canvas.height); drawLayout(); drawPaddle(); drawScore();
-y+=dy;
-if(y>canvas.height-20 && x>paddleX && x<paddleX+100){ caught++; y=30; x=Math.random()*(canvas.width-30)+15; }
-else if(y>canvas.height){ y=30; x=Math.random()*(canvas.width-30)+15; }
-requestAnimationFrame(draw);}
+function draw(){ 
+    ctx.clearRect(0,0,canvas.width,canvas.height); 
+    drawLayout(); drawPaddle(); drawScore();
+    y+=dy;
+    // collision
+    if(y>canvas.height-20 && x>paddleX && x<paddleX+100){ 
+        caught++; 
+        y=30; 
+        x=Math.random()*(canvas.width-30)+15;
+        dy += 0.3; // increase speed for difficulty
+    } else if(y>canvas.height){ 
+        y=30; 
+        x=Math.random()*(canvas.width-30)+15;
+    }
+    if(caught>=target){ 
+        document.getElementById("reflection").style.display="block";
+    }
+    requestAnimationFrame(draw);
+}
 draw();
 </script>
 </body>
