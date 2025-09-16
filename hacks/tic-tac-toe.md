@@ -158,23 +158,7 @@ permalink: /tictactoe
             }
         }
 
-        .winning-line {
-            position: absolute;
-            background: #00ff00;
-            z-index: 10;
-            animation: drawLine 0.8s ease-out;
-            border-radius: 3px;
-            box-shadow: 0 0 10px #00ff00;
-        }
 
-        @keyframes drawLine {
-            0% {
-                transform: scale(0);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
 
         .controls {
             display: flex;
@@ -376,17 +360,7 @@ permalink: /tictactoe
             [0, 4, 8], [2, 4, 6]             // Diagonals
         ];
 
-        // Winning line positions for drawing
-        const winningLinePositions = {
-            '0,1,2': { top: '60px', left: '50%', width: '370px', height: '6px', transform: 'translateX(-50%)' },
-            '3,4,5': { top: '190px', left: '50%', width: '370px', height: '6px', transform: 'translateX(-50%)' },
-            '6,7,8': { top: '320px', left: '50%', width: '370px', height: '6px', transform: 'translateX(-50%)' },
-            '0,3,6': { top: '50%', left: '60px', width: '6px', height: '370px', transform: 'translateY(-50%)' },
-            '1,4,7': { top: '50%', left: '190px', width: '6px', height: '370px', transform: 'translateY(-50%)' },
-            '2,5,8': { top: '50%', left: '320px', width: '6px', height: '370px', transform: 'translateY(-50%)' },
-            '0,4,8': { top: '50%', left: '50%', width: '6px', height: '370px', transform: 'translateY(-50%) rotate(45deg)' },
-            '2,4,6': { top: '50%', left: '50%', width: '6px', height: '370px', transform: 'translateY(-50%) rotate(-45deg)' }
-        };
+
 
         function selectMode(mode) {
             gameMode = mode;
@@ -461,7 +435,7 @@ permalink: /tictactoe
                 }
                 updateScoreDisplay();
                 
-                drawWinningLine(winCondition);
+            
                 createParticleEffect();
                 disableAllSquares();
                 gameActive = false;
@@ -495,17 +469,7 @@ permalink: /tictactoe
             return null;
         }
 
-        function drawWinningLine(winCondition) {
-            const line = document.createElement('div');
-            line.className = 'winning-line';
-            
-            const key = winCondition.join(',');
-            const position = winningLinePositions[key];
-            
-            Object.assign(line.style, position);
-            
-            document.querySelector('.game-container').appendChild(line);
-        }
+
 
         function createParticleEffect() {
             for (let i = 0; i < 50; i++) {
@@ -603,9 +567,8 @@ permalink: /tictactoe
             gameBoard = ['', '', '', '', '', '', '', '', ''];
             gameActive = true;
             
-            // Remove winning line
-            const existingLine = document.querySelector('.winning-line');
-            if (existingLine) existingLine.remove();
+            // Remove any leftover elements
+            
             
             const nextPlayerName = player1Name;
             document.getElementById('gameInfo').textContent = `${nextPlayerName}'s Turn`;
