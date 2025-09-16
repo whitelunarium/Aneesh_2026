@@ -4,7 +4,7 @@ title: Tic-Tac-Toe
 permalink: /tictactoe
 ---
 
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
