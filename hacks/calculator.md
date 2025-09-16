@@ -38,7 +38,7 @@ HTML implementation of the calculator.
     border-radius: 10px;
     padding: 0.25em;
     font-size: 20px;
-    border: 5px solid black;
+    border: 2px solid black;
   
     display: flex;
     align-items: center;
@@ -72,8 +72,9 @@ HTML implementation of the calculator.
       <div class="calculator-clear">A/C</div>
       <div class="calculator-number">0</div>
       <div class="calculator-number">.</div>
-      <div class="calculator-equals">=</div>
       <div class="calculator-operation">/</div>
+      <!--row 5-->
+      <div class="calculator-equals">=</div>
   </div>
 </div>
 
@@ -126,7 +127,7 @@ operations.forEach(button => {
 // Operator action
 function operation (choice) { // function to input operations into the calculator
     if (firstNumber == null) { // once the operation is chosen, the displayed number is stored into the variable firstNumber
-        firstNumber = parseInt(output.innerHTML);
+        firstNumber = parseFloat(output.innerHTML);
         nextReady = true;
         operator = choice;
         return; // exits function
