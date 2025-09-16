@@ -183,7 +183,7 @@ permalink: /snake/
             button_setting_menu.onclick = function(){showScreen(SCREEN_SETTING);};
             button_setting_menu1.onclick = function(){showScreen(SCREEN_SETTING);};
             // speed
-            setSnakeSpeed(25);
+            setSnakeSpeed(35);
             for(let i = 0; i < speed_setting.length; i++){
                 speed_setting[i].addEventListener("click", function(){
                     for(let i = 0; i < speed_setting.length; i++){
@@ -306,19 +306,23 @@ permalink: /snake/
         let changeDir = function(key){
             // test key and switch direction
             switch(key) {
-                case 37:    // left arrow
+                case 37    // left arrow
+                case 65   // A key
                     if (snake_dir !== 1)    // not right
                         snake_next_dir = 3; // then switch left
                     break;
                 case 38:    // up arrow
+                case 87:    
                     if (snake_dir !== 2)    // not down
                         snake_next_dir = 0; // then switch up
                     break;
                 case 39:    // right arrow
+                case 68:    
                     if (snake_dir !== 3)    // not left
                         snake_next_dir = 1; // then switch right
                     break;
                 case 40:    // down arrow
+                case 83:    
                     if (snake_dir !== 0)    // not up
                         snake_next_dir = 2; // then switch down
                     break;
