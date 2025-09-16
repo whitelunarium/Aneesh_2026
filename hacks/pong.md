@@ -45,7 +45,9 @@ comments: True
 const canvas = document.getElementById('pongCanvas');
 const ctx = canvas.getContext('2d');
 
-const paddleWidth = 10, paddleHeight = 100;
+const paddleWidth = 10;
+let paddleHeight = 100; // 🎯 Start height
+const minPaddleHeight = 40; // 🧱 Smallest allowed paddle height
 let player1Y = (canvas.height - paddleHeight) / 2;
 let player2Y = (canvas.height - paddleHeight) / 2;
 const paddleSpeed = 7;
@@ -127,6 +129,11 @@ function update() {
     ballSpeedX = -ballSpeedX;
     let deltaY = ballY - (player1Y + paddleHeight/2);
     ballSpeedY = deltaY * 0.3;
+
+    // 🔥 Shrink paddles slightly, but not below minimum
+    if (paddleHeight > minPaddleHeight) {
+      paddleHeight -= 2;
+    }
   }
 
   // player2 paddle collision
@@ -135,6 +142,11 @@ function update() {
     ballSpeedX = -ballSpeedX;
     let deltaY = ballY - (player2Y + paddleHeight/2);
     ballSpeedY = deltaY * 0.3;
+
+    // 🔥 Shrink paddles slightly, but not below minimum
+    if (paddleHeight > minPaddleHeight) {
+      paddleHeight -= 2;
+    }
   }
 
   // scoring
@@ -180,6 +192,7 @@ function gameLoop() {
 restartBtn.addEventListener("click", () => {
   player1Score = 0;
   player2Score = 0;
+  paddleHeight = 100; // 🔄 Reset paddle height
   player1Y = (canvas.height - paddleHeight) / 2;
   player2Y = (canvas.height - paddleHeight) / 2;
   gameOver = false;
@@ -190,3 +203,4 @@ restartBtn.addEventListener("click", () => {
 initBall();
 gameLoop();
 </script>
+
