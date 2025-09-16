@@ -5,7 +5,7 @@ breadcrumb: True
 title: LXD Group Blog
 description: My first blog in CSP 2025-26
 permalink: /blogs/blog2
-author: Tanay Paranjpe 
+author: Tanay Paranjpe and Moiz Lukmani
 ---
 
 <!DOCTYPE html>
