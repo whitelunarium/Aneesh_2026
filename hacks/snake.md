@@ -71,6 +71,8 @@ permalink: /snake/
 <h2>Snake</h2>
 <div class="container">
     <p class="fs-4">Score: <span id="score_value">0</span></p>
+    <p class="fs-4">Lives: <span id="lives_value">3</span></p>
+
 
     <div class="container bg-secondary" style="text-align:center;">
         <!-- Main Menu -->
@@ -148,6 +150,8 @@ permalink: /snake/
         let food = {x: 0, y: 0};
         let score;
         let wall;
+        let lives;
+        const ele_lives = document.getElementById("lives_value");
         /* Display Control */
         /////////////////////////////////////////////////////////////
         // 0 for the game
@@ -234,7 +238,7 @@ permalink: /snake/
             if(wall === 1){
                 // Wall on, Game over test
                 if (snake[0].x < 0 || snake[0].x === canvas.width / BLOCK || snake[0].y < 0 || snake[0].y === canvas.height / BLOCK){
-                    showScreen(SCREEN_GAME_OVER);
+                    loseLife();
                     return;
                 }
             }else{
@@ -258,21 +262,16 @@ permalink: /snake/
             for(let i = 1; i < snake.length; i++){
                 // Game over test
                 if (snake[0].x === snake[i].x && snake[0].y === snake[i].y){
-                    showScreen(SCREEN_GAME_OVER);
+                    loseLife();
                     return;
                 }
             }
             // Snake eats food checker
-      // Snake eats food checker
             if(checkBlock(snake[0].x, snake[0].y, food.x, food.y)){
-                for (let i = 0; i < 3; i++) {   // Grow by 3 instead of 1
-                    snake[snake.length] = {x: snake[0].x, y: snake[0].y};
-                }
+                snake[snake.length] = {x: snake[0].x, y: snake[0].y};
                 altScore(++score);
                 addFood();
                 activeDot(food.x, food.y);
-            }
-
             }
             // Repaint canvas
             ctx.beginPath();
@@ -299,6 +298,8 @@ permalink: /snake/
             score = 0;
             altScore(score);
             // initial snake
+            lives = 3;
+            altLives(lives);
             snake = [];
             snake.push({x: 0, y: 15});
             snake_next_dir = 1;
@@ -364,6 +365,11 @@ permalink: /snake/
         let altScore = function(score_val){
             ele_score.innerHTML = String(score_val);
         }
+
+        let altLives = function(lives_val){
+            ele_lives.innerHTML = String(lives_val);
+        }
+
         /////////////////////////////////////////////////////////////
         // Change the snake speed...
         // 150 = slow
@@ -378,5 +384,21 @@ permalink: /snake/
             if(wall === 0){screen_snake.style.borderColor = "#606060";}
             if(wall === 1){screen_snake.style.borderColor = "#FFFFFF";}
         }
+        let loseLife = function(){
+            lives--;
+            altLives(lives);
+
+            if(lives > 0){
+            // reset snake to starting position
+            snake = [];
+            snake.push({x: 0, y: 15});
+            snake_next_dir = 1;
+            addFood();
+            mainLoop();
+        } else {
+            showScreen(SCREEN_GAME_OVER);
+        }
+}
+
     })();
 </script>
