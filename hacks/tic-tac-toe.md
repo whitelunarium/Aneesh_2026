@@ -9,11 +9,15 @@ permalink: /tictactoe
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic Tac Toe</title>
+    <title>Tic Tac Toe - Enhanced</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
-            padding: 0;
+            padding: 20px;
             background-color: black;
             display: flex;
             flex-direction: column;
@@ -21,19 +25,84 @@ permalink: /tictactoe
             align-items: center;
             min-height: 100vh;
             font-family: Arial, sans-serif;
+            overflow-x: hidden;
         }
 
         h1 {
             color: white;
             margin-bottom: 20px;
             font-size: 2.5rem;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .setup-screen {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .setup-screen input {
+            margin: 10px;
+            padding: 10px;
+            font-size: 1rem;
+            border: 2px solid white;
+            border-radius: 5px;
+            background: black;
+            color: white;
+        }
+
+        .setup-screen input::placeholder {
+            color: #ccc;
+        }
+
+        .mode-selector {
+            margin: 20px 0;
+        }
+
+        .mode-selector button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: 2px solid white;
+            background: black;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .mode-selector button:hover, .mode-selector button.selected {
+            background: white;
+            color: black;
+        }
+
+        .game-area {
+            display: none;
         }
 
         .game-info {
             color: white;
             font-size: 1.5rem;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             text-align: center;
+            min-height: 40px;
+        }
+
+        .score-board {
+            color: white;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .score-item {
+            text-align: center;
+        }
+
+        .game-container {
+            position: relative;
         }
 
         .game-board {
@@ -42,6 +111,7 @@ permalink: /tictactoe
             grid-template-rows: repeat(3, 120px);
             gap: 10px;
             margin-bottom: 30px;
+            position: relative;
         }
 
         .square {
@@ -54,19 +124,66 @@ permalink: /tictactoe
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: background-color 0.2s ease;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .square:hover {
+        .square:hover:not(:disabled) {
             background-color: #f0f0f0;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
 
         .square:disabled {
             cursor: not-allowed;
-            background-color: #e0e0e0;
         }
 
-        .reset-button {
+        .square .symbol {
+            animation: symbolAppear 0.5s ease-out;
+            transform-origin: center;
+        }
+
+        @keyframes symbolAppear {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(180deg);
+            }
+            50% {
+                transform: scale(1.2) rotate(90deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .winning-line {
+            position: absolute;
+            background: #00ff00;
+            z-index: 10;
+            animation: drawLine 0.8s ease-out;
+            border-radius: 3px;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        @keyframes drawLine {
+            0% {
+                transform: scale(0);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .controls {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
             background-color: white;
             color: black;
             border: none;
@@ -75,55 +192,183 @@ permalink: /tictactoe
             font-weight: bold;
             cursor: pointer;
             border-radius: 5px;
-            transition: background-color 0.2s ease;
+            transition: all 0.3s ease;
         }
 
-        .reset-button:hover {
+        .btn:hover {
             background-color: #f0f0f0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
         }
 
         .winner-message {
             color: #00ff00;
             font-size: 2rem;
             font-weight: bold;
-            margin-bottom: 20px;
-            text-align: center;
+            text-shadow: 0 0 10px #00ff00;
+            animation: pulse 2s infinite;
         }
 
         .tie-message {
             color: #ffff00;
             font-size: 2rem;
             font-weight: bold;
-            margin-bottom: 20px;
-            text-align: center;
+            text-shadow: 0 0 10px #ffff00;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Particle effects */
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .particle-gold {
+            background: gold;
+            box-shadow: 0 0 6px gold;
+        }
+
+        .particle-silver {
+            background: silver;
+            box-shadow: 0 0 6px silver;
+        }
+
+        @keyframes particleFall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .difficulty-selector {
+            margin: 15px 0;
+            color: white;
+        }
+
+        .difficulty-selector select {
+            margin-left: 10px;
+            padding: 5px;
+            font-size: 1rem;
+            background: black;
+            color: white;
+            border: 2px solid white;
+            border-radius: 3px;
+        }
+
+        @media (max-width: 600px) {
+            .game-board {
+                grid-template-columns: repeat(3, 100px);
+                grid-template-rows: repeat(3, 100px);
+            }
+            
+            .square {
+                font-size: 2.5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Tic Tac Toe</h1>
+    <h1>Tic Tac Toe Enhanced</h1>
     
-    <div class="game-info" id="gameInfo">
-        Player X's Turn
+    <div class="setup-screen" id="setupScreen">
+        <h2>Setup Game</h2>
+        
+        <div class="mode-selector">
+            <button onclick="selectMode('human')" class="selected" id="humanMode">vs Human</button>
+            <button onclick="selectMode('ai')" id="aiMode">vs AI</button>
+        </div>
+        
+        <div id="humanInputs">
+            <div>
+                <input type="text" id="player1Name" placeholder="Player 1 Name (X)" maxlength="15">
+                <input type="text" id="player2Name" placeholder="Player 2 Name (O)" maxlength="15">
+            </div>
+        </div>
+        
+        <div id="aiInputs" style="display: none;">
+            <div>
+                <input type="text" id="humanPlayerName" placeholder="Your Name" maxlength="15">
+                <div class="difficulty-selector">
+                    <label>AI Difficulty:</label>
+                    <select id="aiDifficulty">
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <button class="btn" onclick="startGame()">Start Game</button>
+        </div>
     </div>
     
-    <div class="game-board" id="gameBoard">
-        <button class="square" data-index="0" onclick="makeMove(0)"></button>
-        <button class="square" data-index="1" onclick="makeMove(1)"></button>
-        <button class="square" data-index="2" onclick="makeMove(2)"></button>
-        <button class="square" data-index="3" onclick="makeMove(3)"></button>
-        <button class="square" data-index="4" onclick="makeMove(4)"></button>
-        <button class="square" data-index="5" onclick="makeMove(5)"></button>
-        <button class="square" data-index="6" onclick="makeMove(6)"></button>
-        <button class="square" data-index="7" onclick="makeMove(7)"></button>
-        <button class="square" data-index="8" onclick="makeMove(8)"></button>
+    <div class="game-area" id="gameArea">
+        <div class="score-board">
+            <div class="score-item">
+                <div id="player1Score">Player 1: 0</div>
+            </div>
+            <div class="score-item">
+                <div id="player2Score">Player 2: 0</div>
+            </div>
+        </div>
+        
+        <div class="game-info" id="gameInfo">
+            Player X's Turn
+        </div>
+        
+        <div class="game-container">
+            <div class="game-board" id="gameBoard">
+                <button class="square" data-index="0" onclick="makeMove(0)"></button>
+                <button class="square" data-index="1" onclick="makeMove(1)"></button>
+                <button class="square" data-index="2" onclick="makeMove(2)"></button>
+                <button class="square" data-index="3" onclick="makeMove(3)"></button>
+                <button class="square" data-index="4" onclick="makeMove(4)"></button>
+                <button class="square" data-index="5" onclick="makeMove(5)"></button>
+                <button class="square" data-index="6" onclick="makeMove(6)"></button>
+                <button class="square" data-index="7" onclick="makeMove(7)"></button>
+                <button class="square" data-index="8" onclick="makeMove(8)"></button>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn" onclick="resetGame()">New Game</button>
+            <button class="btn" onclick="backToSetup()">Change Settings</button>
+        </div>
     </div>
-    
-    <button class="reset-button" onclick="resetGame()">New Game</button>
 
     <script>
         let currentPlayer = 'X';
         let gameBoard = ['', '', '', '', '', '', '', '', ''];
         let gameActive = true;
+        let gameMode = 'human';
+        let player1Name = 'Player 1';
+        let player2Name = 'Player 2';
+        let isAIGame = false;
+        let aiDifficulty = 'medium';
+        
+        // Score tracking
+        let scores = {
+            player1: 0,
+            player2: 0
+        };
 
         const winningConditions = [
             [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
@@ -131,19 +376,93 @@ permalink: /tictactoe
             [0, 4, 8], [2, 4, 6]             // Diagonals
         ];
 
+        // Winning line positions for drawing
+        const winningLinePositions = {
+            '0,1,2': { top: '60px', left: '50%', width: '370px', height: '6px', transform: 'translateX(-50%)' },
+            '3,4,5': { top: '190px', left: '50%', width: '370px', height: '6px', transform: 'translateX(-50%)' },
+            '6,7,8': { top: '320px', left: '50%', width: '370px', height: '6px', transform: 'translateX(-50%)' },
+            '0,3,6': { top: '50%', left: '60px', width: '6px', height: '370px', transform: 'translateY(-50%)' },
+            '1,4,7': { top: '50%', left: '190px', width: '6px', height: '370px', transform: 'translateY(-50%)' },
+            '2,5,8': { top: '50%', left: '320px', width: '6px', height: '370px', transform: 'translateY(-50%)' },
+            '0,4,8': { top: '50%', left: '50%', width: '6px', height: '370px', transform: 'translateY(-50%) rotate(45deg)' },
+            '2,4,6': { top: '50%', left: '50%', width: '6px', height: '370px', transform: 'translateY(-50%) rotate(-45deg)' }
+        };
+
+        function selectMode(mode) {
+            gameMode = mode;
+            document.querySelectorAll('.mode-selector button').forEach(btn => btn.classList.remove('selected'));
+            
+            if (mode === 'human') {
+                document.getElementById('humanMode').classList.add('selected');
+                document.getElementById('humanInputs').style.display = 'block';
+                document.getElementById('aiInputs').style.display = 'none';
+            } else {
+                document.getElementById('aiMode').classList.add('selected');
+                document.getElementById('humanInputs').style.display = 'none';
+                document.getElementById('aiInputs').style.display = 'block';
+            }
+        }
+
+        function startGame() {
+            if (gameMode === 'human') {
+                player1Name = document.getElementById('player1Name').value || 'Player 1';
+                player2Name = document.getElementById('player2Name').value || 'Player 2';
+                isAIGame = false;
+            } else {
+                player1Name = document.getElementById('humanPlayerName').value || 'You';
+                player2Name = 'AI';
+                aiDifficulty = document.getElementById('aiDifficulty').value;
+                isAIGame = true;
+            }
+            
+            document.getElementById('setupScreen').style.display = 'none';
+            document.getElementById('gameArea').style.display = 'block';
+            
+            updateScoreDisplay();
+            resetGameBoard();
+        }
+
+        function backToSetup() {
+            document.getElementById('setupScreen').style.display = 'block';
+            document.getElementById('gameArea').style.display = 'none';
+            scores = { player1: 0, player2: 0 };
+        }
+
+        function updateScoreDisplay() {
+            document.getElementById('player1Score').textContent = `${player1Name}: ${scores.player1}`;
+            document.getElementById('player2Score').textContent = `${player2Name}: ${scores.player2}`;
+        }
+
         function makeMove(index) {
             if (gameBoard[index] !== '' || !gameActive) {
                 return;
             }
 
-            // Make the move
+            // Make the move with animation
             gameBoard[index] = currentPlayer;
-            document.querySelector(`[data-index="${index}"]`).textContent = currentPlayer;
-            document.querySelector(`[data-index="${index}"]`).disabled = true;
+            const square = document.querySelector(`[data-index="${index}"]`);
+            const symbol = document.createElement('span');
+            symbol.className = 'symbol';
+            symbol.textContent = currentPlayer;
+            square.appendChild(symbol);
+            square.disabled = true;
 
             // Check for win
-            if (checkWinner()) {
-                document.getElementById('gameInfo').innerHTML = `<div class="winner-message">Player ${currentPlayer} Wins! 🎉</div>`;
+            const winCondition = checkWinner();
+            if (winCondition) {
+                const winner = currentPlayer === 'X' ? player1Name : player2Name;
+                document.getElementById('gameInfo').innerHTML = `<div class="winner-message">${winner} Wins! 🎉</div>`;
+                
+                // Update scores
+                if (currentPlayer === 'X') {
+                    scores.player1++;
+                } else {
+                    scores.player2++;
+                }
+                updateScoreDisplay();
+                
+                drawWinningLine(winCondition);
+                createParticleEffect();
                 disableAllSquares();
                 gameActive = false;
                 return;
@@ -158,15 +477,115 @@ permalink: /tictactoe
 
             // Switch player
             currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-            document.getElementById('gameInfo').textContent = `Player ${currentPlayer}'s Turn`;
+            const nextPlayerName = currentPlayer === 'X' ? player1Name : player2Name;
+            document.getElementById('gameInfo').textContent = `${nextPlayerName}'s Turn`;
+
+            // AI move if it's AI's turn
+            if (isAIGame && currentPlayer === 'O' && gameActive) {
+                setTimeout(() => makeAIMove(), 500);
+            }
         }
 
         function checkWinner() {
-            return winningConditions.some(condition => {
-                return condition.every(index => {
-                    return gameBoard[index] === currentPlayer;
-                });
-            });
+            for (let condition of winningConditions) {
+                if (condition.every(index => gameBoard[index] === currentPlayer)) {
+                    return condition;
+                }
+            }
+            return null;
+        }
+
+        function drawWinningLine(winCondition) {
+            const line = document.createElement('div');
+            line.className = 'winning-line';
+            
+            const key = winCondition.join(',');
+            const position = winningLinePositions[key];
+            
+            Object.assign(line.style, position);
+            
+            document.querySelector('.game-container').appendChild(line);
+        }
+
+        function createParticleEffect() {
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = `particle ${Math.random() > 0.5 ? 'particle-gold' : 'particle-silver'}`;
+                    
+                    particle.style.left = Math.random() * window.innerWidth + 'px';
+                    particle.style.animation = `particleFall ${2 + Math.random() * 2}s linear forwards`;
+                    
+                    document.body.appendChild(particle);
+                    
+                    setTimeout(() => particle.remove(), 4000);
+                }, i * 50);
+            }
+        }
+
+        function makeAIMove() {
+            if (!gameActive) return;
+            
+            let move;
+            switch(aiDifficulty) {
+                case 'easy':
+                    move = getRandomMove();
+                    break;
+                case 'medium':
+                    move = Math.random() > 0.3 ? getBestMove() : getRandomMove();
+                    break;
+                case 'hard':
+                    move = getBestMove();
+                    break;
+            }
+            
+            if (move !== -1) {
+                makeMove(move);
+            }
+        }
+
+        function getRandomMove() {
+            const availableMoves = gameBoard.map((cell, index) => cell === '' ? index : null).filter(val => val !== null);
+            return availableMoves.length > 0 ? availableMoves[Math.floor(Math.random() * availableMoves.length)] : -1;
+        }
+
+        function getBestMove() {
+            // Try to win
+            for (let i = 0; i < 9; i++) {
+                if (gameBoard[i] === '') {
+                    gameBoard[i] = 'O';
+                    if (checkWinner()) {
+                        gameBoard[i] = '';
+                        return i;
+                    }
+                    gameBoard[i] = '';
+                }
+            }
+            
+            // Block player from winning
+            for (let i = 0; i < 9; i++) {
+                if (gameBoard[i] === '') {
+                    gameBoard[i] = 'X';
+                    if (checkWinner()) {
+                        gameBoard[i] = '';
+                        return i;
+                    }
+                    gameBoard[i] = '';
+                }
+            }
+            
+            // Take center if available
+            if (gameBoard[4] === '') return 4;
+            
+            // Take corners
+            const corners = [0, 2, 6, 8];
+            const availableCorners = corners.filter(i => gameBoard[i] === '');
+            if (availableCorners.length > 0) {
+                return availableCorners[Math.floor(Math.random() * availableCorners.length)];
+            }
+            
+            // Take any available space
+            return getRandomMove();
         }
 
         function disableAllSquares() {
@@ -176,14 +595,23 @@ permalink: /tictactoe
         }
 
         function resetGame() {
+            resetGameBoard();
+        }
+
+        function resetGameBoard() {
             currentPlayer = 'X';
             gameBoard = ['', '', '', '', '', '', '', '', ''];
             gameActive = true;
             
-            document.getElementById('gameInfo').textContent = "Player X's Turn";
+            // Remove winning line
+            const existingLine = document.querySelector('.winning-line');
+            if (existingLine) existingLine.remove();
+            
+            const nextPlayerName = player1Name;
+            document.getElementById('gameInfo').textContent = `${nextPlayerName}'s Turn`;
             
             document.querySelectorAll('.square').forEach(square => {
-                square.textContent = '';
+                square.innerHTML = '';
                 square.disabled = false;
             });
         }
