@@ -93,12 +93,16 @@ permalink: /snake/
             <a id="new_game2" class="link-alert">new game</a>
             <br>
             <p>Speed:
+                <input id="speed0" type="radio" name="speed" value="145"/>
+                <label for="speed0">Very Slow</label>
                 <input id="speed1" type="radio" name="speed" value="120" checked/>
                 <label for="speed1">Slow</label>
                 <input id="speed2" type="radio" name="speed" value="75"/>
                 <label for="speed2">Normal</label>
                 <input id="speed3" type="radio" name="speed" value="35"/>
                 <label for="speed3">Fast</label>
+                <input id="speed4" type="radio" name="speed" value="25"/>
+                <label for="speed4">Very Fast</label>
             </p>
             <p>Wall:
                 <input id="wallon" type="radio" name="wall" value="1" checked/>
@@ -259,11 +263,16 @@ permalink: /snake/
                 }
             }
             // Snake eats food checker
+      // Snake eats food checker
             if(checkBlock(snake[0].x, snake[0].y, food.x, food.y)){
-                snake[snake.length] = {x: snake[0].x, y: snake[0].y};
+                for (let i = 0; i < 3; i++) {   // Grow by 3 instead of 1
+                    snake[snake.length] = {x: snake[0].x, y: snake[0].y};
+                }
                 altScore(++score);
                 addFood();
                 activeDot(food.x, food.y);
+            }
+
             }
             // Repaint canvas
             ctx.beginPath();
