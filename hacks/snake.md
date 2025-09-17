@@ -15,7 +15,7 @@ permalink: /snake/
 
     canvas{
         display: none;
-        border-style: solid;
+        border-style: box-shadow: 0 0 24px rgba(0,255,198,.6), inset 0 0 60px rgba(0,0,0,.25);
         border-width: 10px;
         border-color: #FFFFFF;
     }
