@@ -140,6 +140,7 @@ permalink: /snake/
         const button_setting_menu1 = document.getElementById("setting_menu1");
         // Game Control
         const BLOCK = 10;   // size of block rendering
+        const GROW_BY = 3; // segments gained per food (change this number)
         let SCREEN = SCREEN_MENU;
         let snake;
         let snake_dir;
@@ -266,7 +267,8 @@ permalink: /snake/
             }
             // Snake eats food checker
             if(checkBlock(snake[0].x, snake[0].y, food.x, food.y)){
-                snake[snake.length] = {x: snake[0].x, y: snake[0].y};
+                for (let i = 0; i < GROW_BY; i++) { snake.push({x: snake[0].x, y: snake[0].y}); }
+
                 altScore(++score);
                 addFood();
                 activeDot(food.x, food.y);
