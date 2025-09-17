@@ -42,17 +42,15 @@ permalink: /snake/
         margin-right: 10px;
     }
 
-    #menu{
-        display: block;
-    }
+  #menu,#setting,#gameover{
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 20px;
+    padding: 24px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 30px rgba(0,0,0,.25);
+}
 
-    #gameover{
-        display: none;
-    }
-
-    #setting{
-        display: none;
-    }
 
     #setting input{
         display:none;
