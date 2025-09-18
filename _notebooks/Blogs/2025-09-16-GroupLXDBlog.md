@@ -6,6 +6,7 @@ title: LXD Group Blog
 description: My first blog in CSP 2025-26
 permalink: /blogs/LxD_Group
 author: Tanay Paranjpe and Perry Say
+render_with_liquid: false
 ---
 
 <div class="container">
@@ -17,15 +18,25 @@ author: Tanay Paranjpe and Perry Say
 
   <!-- Intro: LxD Principles -->
   <div class="content-card">
-    <h2 class="section-title">📘 Core Principles</h2>
+    <h2 class="section-title">📘 What is Learner Experience Design (LxD)?</h2>
     <p>
-      Learner Experience Design (LxD) is about learning by doing, reflecting, and improving. 
-      Mistakes and problems aren’t failures—they’re chances to grow. 
-      By trying, breaking, fixing, and trying again, we become stronger problem solvers.
+      LxD is about creating meaningful learning experiences through active experimentation and reflection. 
+      It emphasizes learning by doing: trying, making mistakes, reflecting, and improving. 
+      Each challenge is an opportunity to grow and strengthen problem-solving skills.
     </p>
     <div class="success-box">
-      <strong>💡 Key Idea:</strong> Every error is feedback. Use it to get better, not to stop.
+      <strong>💡 Key Idea:</strong> Every error is feedback. Use it to improve, not to stop.
     </div>
+  </div>
+
+  <!-- Theme Switching -->
+  <div class="content-card">
+    <h2 class="section-title">🌗 Theme Switching</h2>
+    <p>
+      We implemented a light/dark theme switch for our blog to improve readability and user experience. 
+      Users can toggle themes easily, and the design adapts dynamically using CSS variables and JavaScript. 
+      This makes the interface more flexible and enjoyable for different lighting conditions.
+    </p>
   </div>
 
   <!-- LxD Ninja Game -->
@@ -74,7 +85,7 @@ function spawnItem(){
     good:isGood,
     x:Math.random()*(canvas.width-80)+40,
     y:canvas.height,
-    dy:-(4+Math.random()*3), // upward velocity
+    dy:-(4+Math.random()*3),
     sliced:false
   });
 }
@@ -94,18 +105,15 @@ canvas.addEventListener("mousemove", e=>{
 function draw(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
   
-  // Draw items
   items.forEach(item=>{
     if(!item.sliced){
       ctx.fillStyle=item.good?"#4ade80":"#f87171";
       ctx.font="16px Arial";
       ctx.fillText(item.text,item.x,item.y);
       
-      // Movement
       item.y += item.dy;
-      item.dy += 0.15; // gravity
+      item.dy += 0.15;
       
-      // Slice detection
       if(isDown && Math.abs(mouseX-item.x)<40 && Math.abs(mouseY-item.y)<20){
         item.sliced=true;
         if(item.good){ score+=5; }
@@ -114,16 +122,13 @@ function draw(){
     }
   });
   
-  // Remove sliced or fallen items
   items = items.filter(item=> !item.sliced && item.y<canvas.height+20);
   
-  // Score + lives
   ctx.fillStyle="#e2e8f0";
   ctx.font="18px Arial";
   ctx.fillText("Score: "+score,10,20);
   ctx.fillText("Lives: "+lives,10,40);
   
-  // Game Over
   if(lives<=0){
     ctx.fillStyle="red";
     ctx.font="36px Arial";
