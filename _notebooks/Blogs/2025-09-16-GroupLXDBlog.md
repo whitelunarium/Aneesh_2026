@@ -1,7 +1,7 @@
 ---
 layout: post
-toc: True
-breadcrumb: True
+toc: true
+breadcrumb: true
 title: LXD Group Blog
 description: My first blog in CSP 2025-26
 permalink: /blogs/LxD_Group
@@ -9,35 +9,45 @@ author: Tanay Paranjpe and Perry Say
 ---
 
 <div class="container">
+  <!-- Hero Section -->
   <div class="hero">
-    <h1>🎨 Mastering Jekyll Theme Switching</h1>
-    <p>An interactive guide to implementing flexible theme systems with real-world troubleshooting</p>
+    <h1>🌱 LxD Group Blog</h1>
+    <p>Exploring the principles of Learner Experience Design through practice, reflection, and play.</p>
   </div>
 
   <!-- Intro: LxD Principles -->
   <div class="content-card">
-    <h2 class="section-title">
-      <span class="icon">🌱</span>
-      LxD Core Principles
-    </h2>
+    <h2 class="section-title">📘 Core Principles</h2>
     <p>
-      Learner Experience Design (LxD) isn’t just about making polished projects—it’s about embracing the messy, iterative process of learning. 
-      In LxD, challenges, mistakes, and technical issues aren’t setbacks; they are opportunities to reflect, adapt, and strengthen problem-solving skills. 
-      By documenting what doesn’t work, experimenting with alternatives, and refining designs, learners grow their resilience and creativity.
+      Learner Experience Design (LxD) is about learning by doing, reflecting, and improving. 
+      Mistakes and problems aren’t failures—they’re chances to grow. 
+      By trying, breaking, fixing, and trying again, we become stronger problem solvers.
     </p>
     <div class="success-box">
-      <strong>💡 Key Idea:</strong> Failure isn’t the end of the process—it’s fuel for growth. Each bug, error, or design conflict is a chance to 
-      build confidence, adaptability, and a mindset of continuous improvement.
+      <strong>💡 Key Idea:</strong> Every error is feedback. Use it to get better, not to stop.
     </div>
   </div>
 
-  <!-- Interactive Ninja Game -->
+  <!-- LxD Ninja Game -->
   <div class="interactive-demo">
-    <h3>🍉 LxD Ninja: Slice the Good Practices!</h3>
+    <h2 class="section-title">🎮 LxD Ninja Game</h2>
     <canvas id="ninjaCanvas" width="600" height="400"></canvas>
-    <p>Swipe across the canvas to slice good LxD items ✅ and avoid the bad ones ❌</p>
+    <p>Swipe with your mouse: slice good practices ✅ and avoid the bad ones ❌</p>
   </div>
 </div>
+
+<style>
+/* Simple Styling */
+body { font-family: sans-serif; background:#1a1a1a; color:#e2e8f0; }
+.container { max-width:800px; margin:0 auto; padding:20px; }
+.hero { text-align:center; padding:40px 20px; margin-bottom:30px; }
+.hero h1 { font-size:2.5rem; margin-bottom:10px; }
+.content-card { background:#111; padding:20px; border-radius:10px; margin-bottom:30px; }
+.section-title { font-size:1.5rem; margin-bottom:15px; border-bottom:2px solid #4f46e5; display:inline-block; }
+.success-box { background:#14532d; border-left:5px solid #4ade80; padding:15px; border-radius:5px; margin-top:15px; }
+.interactive-demo { background:#111; padding:20px; border-radius:10px; text-align:center; }
+canvas { background:#222; border:2px solid #4f46e5; border-radius:10px; display:block; margin:1rem auto; }
+</style>
 
 <script>
 // ---------------- Fruit Ninja Style Game ----------------
