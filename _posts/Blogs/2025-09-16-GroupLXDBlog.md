@@ -29,37 +29,28 @@ render_with_liquid: false
     </div>
   </div>
 
-  <!-- Practical Challenges -->
-  <div class="content-card">
-    <h2 class="section-title">⚡ Practical Challenges in LxD</h2>
-    <p>
-      Even with the right design mindset, learners and creators face obstacles:
-      balancing simplicity with depth, dealing with technical setup errors, or 
-      keeping engagement high without overwhelming the learner. 
-      Theme switching is a good example—it makes design flexible, 
-      but requires careful setup to avoid conflicts.
-    </p>
-  </div>
-
   <!-- Theme Switching -->
   <div class="content-card">
     <h2 class="section-title">🌗 Theme Switching</h2>
     <p>
-      Theme switching lets us change how the blog looks without breaking content. 
-      Using the <code>_themes/</code> folder and a <code>Makefile</code>, we can copy in the right 
-      <code>_config.yml</code>, <code>Gemfile</code>, and <code>_layouts/</code> files for each theme. 
-      Jekyll always looks for layouts locally first, then falls back to the remote theme. 
+      We implemented a light/dark theme switch for our blog to improve readability and user experience. 
+      Users can toggle themes easily, and the design adapts dynamically using CSS variables and JavaScript. 
+      This makes the interface more flexible and enjoyable for different lighting conditions.
+    </p>
+    <p>
+      In Jekyll, switching a theme means updating your <code>_config.yml</code> file. 
+      Inside it, you change the line <code>theme: &lt;theme-name&gt;</code>. 
+      For example:
     </p>
     <ul>
-      <li><strong>So Simple</strong> → clean, lightweight, minimal distractions</li>
-      <li><strong>Cayman</strong> → colorful, GitHub-flavored style</li>
-      <li><strong>Minima</strong> → Jekyll’s default, flexible but plain</li>
-      <li><strong>Yat</strong> → modern, bold typography with sidebar navigation</li>
+      <li><code>theme: so-simple</code> → clean and minimal</li>
+      <li><code>theme: cayman</code> → bright with bold headers</li>
+      <li><code>theme: minima</code> → Jekyll’s default, simple and flexible</li>
+      <li><code>theme: yat</code> → stylish with sidebar and modern look</li>
     </ul>
     <p>
-      Running commands like <code>make use-so-simple</code> or <code>make use-minima</code> 
-      applies the selected theme. Overrides (like <code>opencs.html</code>) allow us to 
-      customize layouts while keeping themes swappable.
+      After saving the file, run <code>bundle install</code> and <code>jekyll serve</code> 
+      to see the new theme in action. You can switch back and forth by editing that one line.
     </p>
   </div>
 
@@ -67,27 +58,21 @@ render_with_liquid: false
   <div class="interactive-demo">
     <h2 class="section-title">🎮 LxD Ninja Game</h2>
     <canvas id="ninjaCanvas" width="600" height="400"></canvas>
-    <p>Swipe with your mouse: slice <span style="color:#4ade80">good practices ✅</span> and avoid <span style="color:#f87171">bad ones ❌</span></p>
-    <p id="unlockMessage" style="display:none; color:#4ade80; font-weight:bold; margin-top:15px;">
-      🎉 Great job! You unlocked the Reflection Section below.
-    </p>
+    <p>Swipe with your mouse: slice good practices ✅ and avoid the bad ones ❌</p>
   </div>
 
-  <!-- Reflection Section (Hidden until unlocked) -->
-  <div id="reflectionSection" class="content-card" style="display:none;">
-    <h2 class="section-title">📝 Reflection & Summary</h2>
+  <!-- Lesson Summary (hidden until unlocked) -->
+  <div id="lessonSummary" class="content-card" style="display:none;">
+    <h2 class="section-title">📖 Lesson Summary</h2>
     <p>
-      Through this activity, we learned how <strong>theme switching</strong> empowers flexibility in design, 
-      while <strong>LxD principles</strong> remind us that trial and error drives growth. 
-      The game reinforced sorting “good” and “bad” practices—just like theme overrides help us 
-      keep what works and remove what doesn’t.
-    </p>
-    <p>
-      Key takeaways: <br>
-      ✅ Mistakes guide improvement <br>
-      ✅ Themes are swappable with minimal friction <br>
-      ✅ Reflection solidifies learning <br>
-      ✅ Challenges are opportunities to design smarter
+      In this lesson, we learned that designing a learning experience involves both 
+      <strong>content</strong> (what we study) and <strong>process</strong> (how we study). 
+      Mistakes are useful for growth, and reflection helps lock in what we’ve practiced. 
+      Theme switching is another example of design thinking: by customizing the look and feel, 
+      we adapt the environment to improve user experience.  
+      Finally, the LxD Ninja Game showed that good practices—like committing code often or 
+      fixing errors quickly—help us succeed, while ignoring those habits leads to failure.  
+      Together, these ideas remind us that learning is active, adaptable, and always improving.
     </p>
   </div>
 </div>
@@ -110,14 +95,15 @@ canvas { background:#222; border:2px solid #4f46e5; border-radius:10px; display:
 const canvas = document.getElementById("ninjaCanvas");
 const ctx = canvas.getContext("2d");
 
-const goodItems = ["commit often", "use overrides", "make use-so-simple", "opencs.html"];
-const badItems = ["no commits", "ignore errors", "delete _layouts", "skip config"];
+// Items
+const goodItems = ["commit often", "use venv", "fix errors", "push updates"];
+const badItems = ["ignore bugs", "no commits", "broken configs", "skip testing"];
 
 let items = [];
 let score = 0;
 let lives = 3;
-let unlocked = false;
 
+// Spawn items randomly
 function spawnItem(){
   const isGood = Math.random() > 0.4;
   const text = isGood 
@@ -127,13 +113,13 @@ function spawnItem(){
   items.push({
     text,
     good:isGood,
-    x:Math.random()*(canvas.width-100)+40,
+    x:Math.random()*(canvas.width-80)+40,
     y:canvas.height,
-    dy:-(3+Math.random()*2),
+    dy:-(4+Math.random()*3),
     sliced:false
   });
 }
-setInterval(spawnItem, 2000);
+setInterval(spawnItem, 1500);
 
 // Track mouse movement for "slicing"
 let mouseX=0, mouseY=0, isDown=false;
@@ -156,9 +142,9 @@ function draw(){
       ctx.fillText(item.text,item.x,item.y);
       
       item.y += item.dy;
-      item.dy += 0.1;
+      item.dy += 0.15;
       
-      if(isDown && Math.abs(mouseX-item.x)<50 && Math.abs(mouseY-item.y)<20){
+      if(isDown && Math.abs(mouseX-item.x)<40 && Math.abs(mouseY-item.y)<20){
         item.sliced=true;
         if(item.good){ score+=5; }
         else { score-=3; lives--; }
@@ -173,18 +159,15 @@ function draw(){
   ctx.fillText("Score: "+score,10,20);
   ctx.fillText("Lives: "+lives,10,40);
   
-  // Unlock Reflection
-  if(score>=15 && !unlocked){
-    unlocked=true;
-    document.getElementById("reflectionSection").style.display="block";
-    document.getElementById("unlockMessage").style.display="block";
-  }
-  
   if(lives<=0){
     ctx.fillStyle="red";
     ctx.font="36px Arial";
     ctx.fillText("GAME OVER",canvas.width/2-100,canvas.height/2);
     return;
+  }
+
+  if(score >= 15){
+    document.getElementById("lessonSummary").style.display="block";
   }
   
   requestAnimationFrame(draw);
