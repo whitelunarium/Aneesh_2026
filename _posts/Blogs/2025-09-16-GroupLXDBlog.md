@@ -33,9 +33,21 @@ render_with_liquid: false
   <div class="content-card">
     <h2 class="section-title">🌗 Theme Switching</h2>
     <p>
-      We implemented a light/dark theme switch for our blog to improve readability and user experience. 
-      Users can toggle themes easily, and the design adapts dynamically using CSS variables and JavaScript. 
-      This makes the interface more flexible and enjoyable for different lighting conditions.
+      Theme switching lets us change how the blog looks without breaking content. 
+      Using the <code>_themes/</code> folder and a <code>Makefile</code>, we can copy in the right 
+      <code>_config.yml</code>, <code>Gemfile</code>, and <code>_layouts/</code> files for each theme. 
+      Jekyll always looks for layouts locally first, then falls back to the remote theme. 
+    </p>
+    <ul>
+      <li><strong>So Simple</strong> → clean, lightweight, minimal distractions</li>
+      <li><strong>Cayman</strong> → colorful, GitHub-flavored style</li>
+      <li><strong>Minima</strong> → Jekyll’s default, flexible but plain</li>
+      <li><strong>Yat</strong> → modern, bold typography with sidebar navigation</li>
+    </ul>
+    <p>
+      Running commands like <code>make use-so-simple</code> or <code>make use-minima</code> 
+      applies the selected theme. Overrides (like <code>opencs.html</code>) allow us to 
+      customize layouts while keeping themes swappable.
     </p>
   </div>
 
@@ -43,7 +55,27 @@ render_with_liquid: false
   <div class="interactive-demo">
     <h2 class="section-title">🎮 LxD Ninja Game</h2>
     <canvas id="ninjaCanvas" width="600" height="400"></canvas>
-    <p>Swipe with your mouse: slice good practices ✅ and avoid the bad ones ❌</p>
+    <p>Swipe with your mouse: slice <span style="color:#4ade80">good practices ✅</span> and avoid <span style="color:#f87171">bad ones ❌</span></p>
+    <p id="unlockMessage" style="display:none; color:#4ade80; font-weight:bold; margin-top:15px;">
+      🎉 Great job! You unlocked the Reflection Section below.
+    </p>
+  </div>
+
+  <!-- Reflection Section (Hidden until unlocked) -->
+  <div id="reflectionSection" class="content-card" style="display:none;">
+    <h2 class="section-title">📝 Reflection & Summary</h2>
+    <p>
+      Through this activity, we learned how <strong>theme switching</strong> empowers flexibility in design, 
+      while <strong>LxD principles</strong> remind us that trial and error drives growth. 
+      The game reinforced sorting “good” and “bad” practices—just like theme overrides help us 
+      keep what works and remove what doesn’t.
+    </p>
+    <p>
+      Key takeaways: <br>
+      ✅ Mistakes guide improvement <br>
+      ✅ Themes are swappable with minimal friction <br>
+      ✅ Reflection solidifies learning
+    </p>
   </div>
 </div>
 
@@ -65,15 +97,14 @@ canvas { background:#222; border:2px solid #4f46e5; border-radius:10px; display:
 const canvas = document.getElementById("ninjaCanvas");
 const ctx = canvas.getContext("2d");
 
-// Items
-const goodItems = ["so-simple", "venv", "commit often"];
-const badItems = ["no commits", "broken configs", "ignoring errors"];
+const goodItems = ["commit often", "use overrides", "make use-so-simple", "opencs.html"];
+const badItems = ["no commits", "ignore errors", "delete _layouts", "skip config"];
 
 let items = [];
 let score = 0;
 let lives = 3;
+let unlocked = false;
 
-// Spawn items randomly
 function spawnItem(){
   const isGood = Math.random() > 0.4;
   const text = isGood 
@@ -83,13 +114,13 @@ function spawnItem(){
   items.push({
     text,
     good:isGood,
-    x:Math.random()*(canvas.width-80)+40,
+    x:Math.random()*(canvas.width-100)+40,
     y:canvas.height,
-    dy:-(4+Math.random()*3),
+    dy:-(3+Math.random()*2),
     sliced:false
   });
 }
-setInterval(spawnItem, 1500);
+setInterval(spawnItem, 2000);
 
 // Track mouse movement for "slicing"
 let mouseX=0, mouseY=0, isDown=false;
@@ -112,9 +143,9 @@ function draw(){
       ctx.fillText(item.text,item.x,item.y);
       
       item.y += item.dy;
-      item.dy += 0.15;
+      item.dy += 0.1;
       
-      if(isDown && Math.abs(mouseX-item.x)<40 && Math.abs(mouseY-item.y)<20){
+      if(isDown && Math.abs(mouseX-item.x)<50 && Math.abs(mouseY-item.y)<20){
         item.sliced=true;
         if(item.good){ score+=5; }
         else { score-=3; lives--; }
@@ -128,6 +159,13 @@ function draw(){
   ctx.font="18px Arial";
   ctx.fillText("Score: "+score,10,20);
   ctx.fillText("Lives: "+lives,10,40);
+  
+  // Unlock Reflection
+  if(score>=10 && !unlocked){
+    unlocked=true;
+    document.getElementById("reflectionSection").style.display="block";
+    document.getElementById("unlockMessage").style.display="block";
+  }
   
   if(lives<=0){
     ctx.fillStyle="red";
