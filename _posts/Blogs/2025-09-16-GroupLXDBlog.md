@@ -29,6 +29,18 @@ render_with_liquid: false
     </div>
   </div>
 
+  <!-- Practical Challenges -->
+  <div class="content-card">
+    <h2 class="section-title">⚡ Practical Challenges in LxD</h2>
+    <p>
+      Even with the right design mindset, learners and creators face obstacles:
+      balancing simplicity with depth, dealing with technical setup errors, or 
+      keeping engagement high without overwhelming the learner. 
+      Theme switching is a good example—it makes design flexible, 
+      but requires careful setup to avoid conflicts.
+    </p>
+  </div>
+
   <!-- Theme Switching -->
   <div class="content-card">
     <h2 class="section-title">🌗 Theme Switching</h2>
@@ -74,7 +86,8 @@ render_with_liquid: false
       Key takeaways: <br>
       ✅ Mistakes guide improvement <br>
       ✅ Themes are swappable with minimal friction <br>
-      ✅ Reflection solidifies learning
+      ✅ Reflection solidifies learning <br>
+      ✅ Challenges are opportunities to design smarter
     </p>
   </div>
 </div>
@@ -161,7 +174,7 @@ function draw(){
   ctx.fillText("Lives: "+lives,10,40);
   
   // Unlock Reflection
-  if(score>=10 && !unlocked){
+  if(score>=15 && !unlocked){
     unlocked=true;
     document.getElementById("reflectionSection").style.display="block";
     document.getElementById("unlockMessage").style.display="block";
