@@ -19,8 +19,16 @@ const questions = [
   { q: "What would the data type be for the variable isHot?",
     opts: ["Integer","Boolean","Minus","String"], correct: 1 },   // Boolean = index 1
   { q: "For variables should you use = or == ?",
-    opts: ["==","="], correct: 1 }                                // "=" = index 1
+    opts: ["==","="], correct: 1 },                              // "=" = index 1
+  { q: "If you use the word let while assigning a variable, what language is that?",
+    opts: ["JavaScript", "Python"], correct: 0 },
+  { q: "What is the correct way to store a string variable in JavaScript",
+    opts: ["let name = 'Ethan'", "let name = Ethan", "let name = 'Ethan'"], correct: 0 },
+  { q: "What value does this code assign to x: let x = 10;",
+    opts: ["10 (string)", "x", "undefined", "10 (an integer)"], correct: 3 },
+    
 ];
+
 
 let current = 0;
 function loadQuestion() {
