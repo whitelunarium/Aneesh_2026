@@ -15,17 +15,19 @@ Answer **all questions correctly** to win. One wrong answer restarts the quiz!
 <script>
 const questions = [
   { q: "What would the data type be for 'hello'?",
-    opts: ["Boolean", "String", "Integer", "array"], correct: 1 }, // Integer = index 2
-  { q: "What would the data type be for the variable isHot?",
-    opts: ["Integer","Boolean","Minus","String"], correct: 1 },   // Boolean = index 1
-  { q: "For variables should you use = or == ?",
-    opts: ["==","="], correct: 1 },                              // "=" = index 1
-  { q: "If you use the word let while assigning a variable, what language is that?",
-    opts: ["JavaScript", "Python"], correct: 0 },
-  { q: "What is the correct way to store a string variable in JavaScript",
-    opts: ["let name = 'Ethan'", "let name = Ethan", "let name = 'Ethan'"], correct: 0 },
-  { q: "What value does this code assign to x: let x = 10;",
-    opts: ["10 (string)", "x", "undefined", "10 (an integer)"], correct: 3 },
+    opts: ["Boolean", "String", "Integer", "array"], correct: 1 }, 
+  { q: "What are strings in coding?",
+    opts: ["A data type","A piece of yarn","Addition","Multiplication"], correct: 0 },  
+  { q: "In Pyhton, what will print(name[-1]) return?",
+    opts: ["First letter","Middle letters", "Last letter", "Nothing"], correct: 2 },                              
+  { q: "In Python, what operation will join strings?",
+    opts: ["-", "/", "*", "+"], correct: 3 },
+  { q: "In JavaScript, what command do you use to join strings",
+    opts: ["concat", "substring", "len", "All of the above"], correct: 0 },
+  { q: "In JavaScript, what will: let fullName = 'Ethan';   let first = fullName.substring(1,3) return?",
+    opts: ["th", "ethan", "Ethan", "than"], correct: 0 },
+  { q: "Can numbers be inside of strings: let x = '123'?, choose best option",
+    opts: ["Yes", "No", "I don't know", "Yes, but it cannot do math"], correct: 3 }
     
 ];
 
