@@ -23,9 +23,19 @@ const questions = [
   { q: "If you use the word let while assigning a variable, what language is that?",
     opts: ["JavaScript", "Python"], correct: 0 },
   { q: "What is the correct way to store a string variable in JavaScript",
-    opts: ["let name = 'Ethan'", "let name = Ethan", "let name = 'Ethan'"], correct: 0 },
+    opts: ["let name = 'Ethan'", "let name = Ethan", "let name = Ethan'"], correct: 0 },
   { q: "What value does this code assign to x: let x = 10;",
     opts: ["10 (string)", "x", "undefined", "10 (an integer)"], correct: 3 },
+  { q: "What is a boolean?",
+    opts: ["A number", "A group of words", "True or false", "A minus"], correct: 2 },
+  { q: "What are the characteristics of an ideal variable name?",
+    opts: ["Long and specific", "Short and broad", "Long and broad", "Medium and specific"], correct: 3 },
+  { q: "Which of these is a better variable name?",
+    opts: ["2name", "name2", "#name", "my-name"], correct: 1 },
+  { q: "What would the value of x be after this code? let x = 5;  x = x + 3;",
+    opts: ["3", "5", "8", "x"], correct: 2 },
+  { q: "If you write let age = 15; what is the variable name?",
+    opts: ["let", "15", "JavaScript", "age"], correct: 3 },       
     
 ];
 
