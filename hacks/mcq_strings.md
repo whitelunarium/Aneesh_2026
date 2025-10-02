@@ -27,7 +27,13 @@ const questions = [
   { q: "In JavaScript, what will: let fullName = 'Ethan';   let first = fullName.substring(1,3) return?",
     opts: ["th", "ethan", "Ethan", "than"], correct: 0 },
   { q: "Can numbers be inside of strings: let x = '123'?, choose best option",
-    opts: ["Yes", "No", "I don't know", "Yes, but it cannot do math"], correct: 3 }
+    opts: ["Yes", "No", "I don't know", "Yes, but it cannot do math"], correct: 3 },
+  { q: "How do you get multiline strings in Python?",
+    opts: ["Triple quotes", "Double quotes", "Quadruple quotes", "Single quotes"], correct: 0 },
+  { q: "What will len do in Python?",
+    opts: ["Ouput the number of spaces", "Output the length of the string", "Combine two strings", "Multiply two strings"], correct: 1 },
+    { q: "In Python, what will print(name[0])?",
+    opts: ["The whole string", "Last character", "First character", "All of the above"], correct: 2 }
     
 ];
 
