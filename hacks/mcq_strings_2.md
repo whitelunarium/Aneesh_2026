@@ -22,6 +22,17 @@ const questions = [
     opts: ["Ouput the number of spaces", "Output the length of the string", "Combine two strings", "Multiply two strings"], correct: 1 },
   { q: "In Python, what will print(name[0])?",
     opts: ["The whole string", "Last character", "First character", "All of the above"], correct: 2 },
+  { q: "In JavaScript, how do you make multiline quotes?",
+    opts: ["`", "'", '"', "''"], correct : 0 },
+  { q: "In JavaScript, How do you get a chunk out of a string?",
+    opts: ["len", "length", "concat", "substring"], correct : 3 },
+  { q: "If let str = 'Lebron'; what is str.length?",
+    opts: ["4", "6", "5", "None of the above"], correct : 1 },
+  { q: "What number/index will a string always start with in JavaScript?",
+    opts: ["1", "0", "-1", "integer"], correct : 1 },
+  { q: "What happens if you use a single quote instead of a double quote for strings?",
+    opts: ["Nothing", "The string will not work", "Your computer will crash"], correct: 0 }
+
   
     
 ];
