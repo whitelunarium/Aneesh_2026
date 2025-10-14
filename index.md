@@ -10,10 +10,12 @@ Hi! My name is Aneesh Deevi.
 
 | Role         | Name     | Repo Location                       | Stream                | Repo Name |
 |--------------|----------|-------------------------------------|-----------------------|-----------|
-| Scrum Master | John     | github.com/jm1021/student           | upstream (OCS fork)   | student   |
-| Scrummer     | Torin    | github.com/torin/student            | downstream (fork)     | student   |
-| Scrummer     | Avantika | github.com/avantika/student         | downstream (fork)     | student   |
-| Scrummer     | Aadit    | github.com/aaadit/student           | downstream (fork)     | student   |
+| Scrum Master | Aneesh     | https://github.com/whitelunarium/Aneesh_2026          | downstream (OCS fork)   | Aneesh_2026   |
+| Scrummer     | Ethan    | https://github.com/EthanP2010/student            | downstream (fork)     | student   |
+| Scrummer     | Moiz | https://github.com/MoizL163/student        | downstream (fork)     | student   |
+| Scrummer     | Neil    | https://github.com/neilM-3/student          | downstream (fork)     | student   |
+| Scrummer     | Tanay    | https://github.com/tp254/student          | downstream (fork)     | student   |
+| Scrummer     | Perry    | https://github.com/hotpotcarrots/portfolio          | downstream (fork)     | portfolio   |
 
 
 ## Links to Learning
