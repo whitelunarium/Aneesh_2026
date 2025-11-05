@@ -1,13 +1,11 @@
 ---
-layout: opencs
+layout: post
 title: "Trimester 1 Final Blog"
 description: "Aneesh's blog"
 permalink: /blogs/tri1/final/
-categories: [CSP, Blogs, Final]
-tags: [blogs, final, zombies]
+categories: [Blogs]
 author: "Aneesh Deevi"
 date: 2025-11-04
-microblog: true
 ---
 
 <div style="background: linear-gradient(135deg, #1a1a1a, #0f0f0f); color: #f4f4f4; padding: 2rem; border-radius: 20px; box-shadow: 0 0 15px rgba(255,255,255,0.1);">
