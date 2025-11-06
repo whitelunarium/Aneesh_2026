@@ -99,15 +99,15 @@ date: 2025-11-04
   <div class="scroller-container">
     <button class="scroll-btn scroll-left" onclick="scrollImages('left')">‹</button>
     <div class="images-wrapper" id="imagesWrapper">
-      <img src="/media/assets/N@tM/image1.jpg" alt="Night at the Museum 1" class="natm-image">
-      <img src="/media/assets/N@tM/image2.jpg" alt="Night at the Museum 2" class="natm-image">
-      <img src="/media/assets/N@tM/image3.jpg" alt="Night at the Museum 3" class="natm-image">
-      <img src="/media/assets/N@tM/image4.jpg" alt="Night at the Museum 4" class="natm-image">
-      <img src="/media/assets/N@tM/image5.jpg" alt="Night at the Museum 5" class="natm-image">
-      <img src="/media/assets/N@tM/image6.jpg" alt="Night at the Museum 6" class="natm-image">
-      <img src="/media/assets/N@tM/image7.jpg" alt="Night at the Museum 7" class="natm-image">
-      <img src="/media/assets/N@tM/image8.jpg" alt="Night at the Museum 8" class="natm-image">
-      <img src="/media/assets/N@tM/image9.jpg" alt="Night at the Museum 9" class="natm-image">
+      <img src="{{site.baseurl}}/images/N@tM/image1.jpg" alt="Night at the Museum 1" class="natm-image">
+      <img src="{{site.baseurl}}/images/N@tM/image2.jpg" alt="Night at the Museum 2" class="natm-image">
+      <img src="{{site.baseurl}}/images/N@tM/image3.jpg" alt="Night at the Museum 3" class="natm-image">
+      <img src="{{site.baseurl}}/images/N@tM/image4.jpg" alt="Night at the Museum 4" class="natm-image">
+      <img src="{{site.baseurl}}/images/N@tM/image5.jpg" alt="Night at the Museum 5" class="natm-image">
+      <img src="{{site.baseurl}}/images/N@tM/image6.jpg" alt="Night at the Museum 6" class="natm-image">
+      <img src="{{site.baseurl}}/images/N@tM/image7.jpg" alt="Night at the Museum 7" class="natm-image">
+      <img src="{{site.baseurl}}/images/N@tM/image8.jpg" alt="Night at the Museum 8" class="natm-image">
+      <img src="{{site.baseurl}}/images/N@tM/image9.jpg" alt="Night at the Museum 9" class="natm-image">
     </div>
     <button class="scroll-btn scroll-right" onclick="scrollImages('right')">›</button>
   </div>
