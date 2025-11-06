@@ -205,6 +205,77 @@ date: 2025-11-04
 
 <div class="section-divider"></div>
 
+<h2>Key CSP Concepts & Vocabulary</h2>
+
+<div class="content-card">
+  <h3>📊 Data & Number Systems</h3>
+  <p><strong>Binary sequences:</strong> The fundamental building blocks of all digital information, representing data as sequences of 0s and 1s.</p>
+  <p><strong>Bits:</strong> The smallest unit of data in computing, representing a single binary digit (0 or 1).</p>
+  <p><strong>Binary number:</strong> A number system using only two digits (0 and 1), which computers use for all operations.</p>
+  <p><strong>Nonnegative integers:</strong> Whole numbers greater than or equal to zero, commonly used in programming for counting and indexing.</p>
+  <p><strong>Integer:</strong> A whole number that can be positive, negative, or zero.</p>
+  <p><strong>Floating-point representation:</strong> A method for representing real numbers with decimal points in binary format, allowing computers to handle fractional values.</p>
+  <p><strong>Overflow error:</strong> Occurs when a calculation produces a number too large to be represented within the allocated number of bits.</p>
+</div>
+
+<div class="content-card">
+  <h3>🔐 Security & Encryption</h3>
+  <p><strong>Symmetric encryption:</strong> A type of encryption where the same key is used to both encrypt and decrypt data, requiring secure key sharing between parties.</p>
+</div>
+
+<div class="content-card">
+  <h3>🌐 Internet & Networking</h3>
+  <p><strong>Internet communication:</strong> The exchange of data between devices over interconnected networks using standardized protocols.</p>
+  <p><strong>Internet Engineering Task Force (IETF):</strong> The organization responsible for developing and promoting Internet standards and protocols.</p>
+  <p><strong>Open standards and protocols:</strong> Publicly available technical specifications that enable interoperability between different systems and devices.</p>
+  <p><strong>Routing:</strong> The process of determining the path data packets take across networks to reach their destination.</p>
+  <p><strong>Addresses:</strong> Unique identifiers assigned to devices on a network, allowing data to be sent to the correct destination.</p>
+  <p><strong>Internet protocol version:</strong> Different versions of the Internet Protocol (like IPv4 and IPv6) that define how data is addressed and routed across networks.</p>
+  <p><strong>Circuits:</strong> Physical or logical pathways through which data travels in a network.</p>
+</div>
+
+<div class="content-card">
+  <h3>💾 Data Processing & Compression</h3>
+  <p><strong>Byte pair encoding:</strong> A compression technique that identifies frequently occurring pairs of characters and replaces them with single symbols to reduce data size.</p>
+  <p><strong>Lossy transformation:</strong> A data compression method that permanently removes some information to reduce file size, trading quality for smaller storage.</p>
+</div>
+
+<div class="content-card">
+  <h3>🧮 Logic & Boolean Operations</h3>
+  <p><strong>Boolean:</strong> A data type that can only have two values: true or false, used extensively in conditional logic.</p>
+  <p><strong>Boolean variable:</strong> A variable that stores a Boolean value (true or false), often used in decision-making structures.</p>
+  <p><strong>And/Or:</strong> Logical operators used to combine Boolean expressions, where "and" requires all conditions to be true, while "or" requires at least one condition to be true.</p>
+</div>
+
+<div class="content-card">
+  <h3>💻 Programming Concepts</h3>
+  <p><strong>Iterative and incremental process of program development:</strong> A development approach where programs are built in small, repeated cycles, allowing for continuous testing, refinement, and improvement.</p>
+  <p><strong>Palindromes:</strong> Words, phrases, or sequences that read the same forwards and backwards, often used as programming practice problems.</p>
+  <p><strong>Concat:</strong> Short for concatenation, the operation of joining two strings or data sequences together end-to-end.</p>
+</div>
+
+<div class="content-card">
+  <h3>🌍 Modern Computing Paradigms</h3>
+  <p><strong>Cloud computing:</strong> The delivery of computing services (storage, processing, software) over the internet, allowing access to resources without local infrastructure.</p>
+  <p><strong>Citizen science:</strong> Scientific research conducted by non-professional scientists, often enabled by digital platforms that allow public participation in data collection and analysis.</p>
+  <p><strong>Crowdsourcing participants:</strong> Individuals who contribute to a project or task as part of a large group, leveraging collective intelligence and effort.</p>
+  <p><strong>Machine learning programs:</strong> Software that can learn from data and improve performance over time without being explicitly programmed for every scenario.</p>
+</div>
+
+<div class="content-card">
+  <h3>⚖️ Digital Equity</h3>
+  <p><strong>Digital divide:</strong> The gap between those who have access to modern information and communication technology and those who don't, often based on socioeconomic, geographic, or demographic factors.</p>
+</div>
+
+<div class="section-divider"></div>
+
+<div class="content-card">
+  <h3>8. Something Cool to Share</h3>
+  <p>Something cool that I would like to share is that my whole family works in the computer science area, my dad, Srinivasa, works in Qualcomm, my mom, Vanaja, at CoreLogic, and my brother, Abhijay, is job searching.</p>
+</div>
+
+<div class="section-divider"></div>
+
 <div class="content-card">
   <h3>8. Something Cool to Share</h3>
   <p>Something cool that I would like to share is that my whole family works in the computer science area, my dad, Srinivasa, works in Qualcomm, my mom, Vanaja, at CoreLogic, and my brother, Abhijay, is job searching.</p>
