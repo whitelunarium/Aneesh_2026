@@ -94,6 +94,193 @@ date: 2025-11-04
   <p>Presenting in Night at the Museum was a great experience, getting to attend other people's presentations, learning how they presented, what they presented, and presenting to the parents and showing our new vocabulary. Through N@tM, I felt like I've stepped in to a higher level of coding, even if there's a lot more higher levels. A few comments that piqued my interest were "I loved the depth of information and it is presented in a relatable way. The quiz at the end also helped me test my understanding. <strong>Some feedback that I would provide is reduce some of the paragraphs of text into bullets.</strong>" by Anvay and "Overall very good, fix the styling (white background) and also <strong>add some variety with the checkpoints (like frqs)</strong>" by an anonymous person. These ideas, in my opinion, were great because when I was presenting to the parents, I was thinking the same thing, but I only realized when it was time to present.</p>
 </div>
 
+<!-- HTML Structure for Image Scroller -->
+<div class="image-scroller">
+  <div class="scroller-container">
+    <button class="scroll-btn scroll-left" onclick="scrollImages('left')">‹</button>
+    <div class="images-wrapper" id="imagesWrapper">
+      <img src="/media/assets/N@tM/image1.jpg" alt="Night at the Museum 1" class="natm-image">
+      <img src="/media/assets/N@tM/image2.jpg" alt="Night at the Museum 2" class="natm-image">
+      <img src="/media/assets/N@tM/image3.jpg" alt="Night at the Museum 3" class="natm-image">
+      <img src="/media/assets/N@tM/image4.jpg" alt="Night at the Museum 4" class="natm-image">
+      <img src="/media/assets/N@tM/image5.jpg" alt="Night at the Museum 5" class="natm-image">
+      <img src="/media/assets/N@tM/image6.jpg" alt="Night at the Museum 6" class="natm-image">
+      <img src="/media/assets/N@tM/image7.jpg" alt="Night at the Museum 7" class="natm-image">
+      <img src="/media/assets/N@tM/image8.jpg" alt="Night at the Museum 8" class="natm-image">
+      <img src="/media/assets/N@tM/image9.jpg" alt="Night at the Museum 9" class="natm-image">
+    </div>
+    <button class="scroll-btn scroll-right" onclick="scrollImages('right')">›</button>
+  </div>
+  <div class="image-dots" id="imageDots"></div>
+</div>
+
+<style>
+.image-scroller {
+  margin: 2rem 0;
+  width: 100%;
+}
+
+.scroller-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.images-wrapper {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 1rem;
+  padding: 1rem 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.images-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.natm-image {
+  min-width: 300px;
+  max-width: 300px;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid #a78bfa;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.natm-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(167, 139, 250, 0.5);
+}
+
+.scroll-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  color: white;
+  font-size: 2rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.scroll-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(167, 139, 250, 0.6);
+}
+
+.scroll-btn:active {
+  transform: scale(0.95);
+}
+
+.image-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #444;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background: #a78bfa;
+  transform: scale(1.3);
+}
+
+@media (max-width: 768px) {
+  .natm-image {
+    min-width: 250px;
+    max-width: 250px;
+    height: 350px;
+  }
+  
+  .scroll-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+}
+</style>
+
+<!-- JavaScript for Image Scroller Functionality -->
+<script>
+function scrollImages(direction) {
+  const wrapper = document.getElementById('imagesWrapper');
+  const scrollAmount = 320; // Width of image + gap
+  
+  if (direction === 'left') {
+    wrapper.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+  } else {
+    wrapper.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  }
+  
+  setTimeout(updateDots, 100);
+}
+
+function updateDots() {
+  const wrapper = document.getElementById('imagesWrapper');
+  const images = wrapper.getElementsByClassName('natm-image');
+  const dotsContainer = document.getElementById('imageDots');
+  
+  // Create dots if they don't exist
+  if (dotsContainer.children.length === 0) {
+    for (let i = 0; i < images.length; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'dot';
+      dot.onclick = () => scrollToImage(i);
+      dotsContainer.appendChild(dot);
+    }
+  }
+  
+  // Update active dot based on scroll position
+  const scrollPosition = wrapper.scrollLeft;
+  const imageWidth = 320; // Width of image + gap
+  const currentIndex = Math.round(scrollPosition / imageWidth);
+  
+  const dots = dotsContainer.getElementsByClassName('dot');
+  for (let i = 0; i < dots.length; i++) {
+    dots[i].classList.remove('active');
+  }
+  if (dots[currentIndex]) {
+    dots[currentIndex].classList.add('active');
+  }
+}
+
+function scrollToImage(index) {
+  const wrapper = document.getElementById('imagesWrapper');
+  const imageWidth = 320; // Width of image + gap
+  wrapper.scrollTo({ left: index * imageWidth, behavior: 'smooth' });
+  setTimeout(updateDots, 100);
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+  updateDots();
+  
+  // Update dots when user scrolls manually
+  const wrapper = document.getElementById('imagesWrapper');
+  wrapper.addEventListener('scroll', updateDots);
+});
+</script>
+
 <div class="content-card">
   <h3>4. Goals for Next Project</h3>
   <p>For my next project, I wan't to create a project that is worthy of a 100% in the class. I will put more effort than I did in trimester 1, and create a project that looks good, is informational but easy to read and understand, and is also completely interactive with the audience.</p>
@@ -208,7 +395,7 @@ date: 2025-11-04
 <h2>Key CSP Concepts & Vocabulary</h2>
 
 <div class="content-card">
-  <h3>📊 Data & Number Systems</h3>
+  <h3> Data & Number Systems</h3>
   <p><strong>Binary sequences:</strong> The fundamental building blocks of all digital information, representing data as sequences of 0s and 1s.</p>
   <p><strong>Bits:</strong> The smallest unit of data in computing, representing a single binary digit (0 or 1).</p>
   <p><strong>Binary number:</strong> A number system using only two digits (0 and 1), which computers use for all operations.</p>
@@ -219,12 +406,12 @@ date: 2025-11-04
 </div>
 
 <div class="content-card">
-  <h3>🔐 Security & Encryption</h3>
+  <h3> Security & Encryption</h3>
   <p><strong>Symmetric encryption:</strong> A type of encryption where the same key is used to both encrypt and decrypt data, requiring secure key sharing between parties.</p>
 </div>
 
 <div class="content-card">
-  <h3>🌐 Internet & Networking</h3>
+  <h3> Internet & Networking</h3>
   <p><strong>Internet communication:</strong> The exchange of data between devices over interconnected networks using standardized protocols.</p>
   <p><strong>Internet Engineering Task Force (IETF):</strong> The organization responsible for developing and promoting Internet standards and protocols.</p>
   <p><strong>Open standards and protocols:</strong> Publicly available technical specifications that enable interoperability between different systems and devices.</p>
@@ -235,27 +422,27 @@ date: 2025-11-04
 </div>
 
 <div class="content-card">
-  <h3>💾 Data Processing & Compression</h3>
+  <h3> Data Processing & Compression</h3>
   <p><strong>Byte pair encoding:</strong> A compression technique that identifies frequently occurring pairs of characters and replaces them with single symbols to reduce data size.</p>
   <p><strong>Lossy transformation:</strong> A data compression method that permanently removes some information to reduce file size, trading quality for smaller storage.</p>
 </div>
 
 <div class="content-card">
-  <h3>🧮 Logic & Boolean Operations</h3>
+  <h3> Logic & Boolean Operations</h3>
   <p><strong>Boolean:</strong> A data type that can only have two values: true or false, used extensively in conditional logic.</p>
   <p><strong>Boolean variable:</strong> A variable that stores a Boolean value (true or false), often used in decision-making structures.</p>
   <p><strong>And/Or:</strong> Logical operators used to combine Boolean expressions, where "and" requires all conditions to be true, while "or" requires at least one condition to be true.</p>
 </div>
 
 <div class="content-card">
-  <h3>💻 Programming Concepts</h3>
+  <h3> Programming Concepts</h3>
   <p><strong>Iterative and incremental process of program development:</strong> A development approach where programs are built in small, repeated cycles, allowing for continuous testing, refinement, and improvement.</p>
   <p><strong>Palindromes:</strong> Words, phrases, or sequences that read the same forwards and backwards, often used as programming practice problems.</p>
   <p><strong>Concat:</strong> Short for concatenation, the operation of joining two strings or data sequences together end-to-end.</p>
 </div>
 
 <div class="content-card">
-  <h3>🌍 Modern Computing Paradigms</h3>
+  <h3> Modern Computing Paradigms</h3>
   <p><strong>Cloud computing:</strong> The delivery of computing services (storage, processing, software) over the internet, allowing access to resources without local infrastructure.</p>
   <p><strong>Citizen science:</strong> Scientific research conducted by non-professional scientists, often enabled by digital platforms that allow public participation in data collection and analysis.</p>
   <p><strong>Crowdsourcing participants:</strong> Individuals who contribute to a project or task as part of a large group, leveraging collective intelligence and effort.</p>
@@ -263,7 +450,7 @@ date: 2025-11-04
 </div>
 
 <div class="content-card">
-  <h3>⚖️ Digital Equity</h3>
+  <h3> Digital Equity</h3>
   <p><strong>Digital divide:</strong> The gap between those who have access to modern information and communication technology and those who don't, often based on socioeconomic, geographic, or demographic factors.</p>
 </div>
 
@@ -274,14 +461,7 @@ date: 2025-11-04
   <p>Something cool that I would like to share is that my whole family works in the computer science area, my dad, Srinivasa, works in Qualcomm, my mom, Vanaja, at CoreLogic, and my brother, Abhijay, is job searching.</p>
 </div>
 
-<div class="section-divider"></div>
-
-<div class="content-card">
-  <h3>8. Something Cool to Share</h3>
-  <p>Something cool that I would like to share is that my whole family works in the computer science area, my dad, Srinivasa, works in Qualcomm, my mom, Vanaja, at CoreLogic, and my brother, Abhijay, is job searching.</p>
-</div>
-
-</div>
+</div>  
 
 <style>
 * {
