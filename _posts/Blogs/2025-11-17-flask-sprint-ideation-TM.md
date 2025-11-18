@@ -349,7 +349,10 @@ date: 2025-11-17
         
         
         <h2>Overview</h2>
-        <p><span class="highlight">Board Game Quest</span> turns education into a game. Each square on the virtual board represents a learning module. Players start at "Go" and advance by completing challenges and mastering concepts. Flask backend tracks all progress persistently.</p>
+        <p><span class="highlight">Board Game Quest</span> turns education into a game. Each square on the virtual board represents a learning module. Players start at "Go" and advance by completing challenges and mastering concepts. Flask backend tracks all progress persistently.
+
+        
+        </p>
         
         <div class="board-demo">
             <h3>Option 1: Snakes & Ladders</h3>
@@ -647,7 +650,7 @@ date: 2025-11-17
         <ul>
             <li><span class="highlight">Dev:</span> Local Flask + SQLite</li>
             <li><span class="highlight">Prod:</span> Heroku/AWS/DigitalOcean + PostgreSQL + Redis sessions</li>
-            <li><span class="highlight">Optimization:</span> DB indexing, SQLAlchemy lazy loading, AJAX updates, pagination</li>
+            <li><span class="highlight">Optimization:</span> DB indexing, SQLAlchemy lazy loading,</li>
             <li><span class="highlight">Mobile:</span> Responsive design, touch controls, swipe navigation, offline caching</li>
         </ul>
     
