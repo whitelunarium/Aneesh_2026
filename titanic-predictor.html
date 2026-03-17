@@ -1,0 +1,956 @@
+---
+layout: base
+title: Titanic Survival Predictor
+search_exclude: true
+description: Titanic survival predictor with local Flask API support
+hide: true
+permalink: /titanic-predictor
+---
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ivory: #f5ede0;
+    --ivory-dark: #e8d9c5;
+    --gold: #c9a84c;
+    --gold-light: #e8c96b;
+    --gold-dim: #8c7035;
+    --ink: #1a1209;
+    --ink-soft: #3d2e18;
+    --navy: #0c1e35;
+    --navy-mid: #163352;
+    --teal: #1b6e72;
+    --teal-light: #2a9ea4;
+    --survive: #2a7a50;
+    --survive-light: #3dae72;
+    --die: #8c2c24;
+    --die-light: #c43d31;
+    --paper: #faf4eb;
+    --paper-shadow: rgba(26, 18, 9, 0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    background: var(--navy);
+    min-height: 100vh;
+    color: var(--ink);
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  .site-header,
+  .page-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .site-header {
+    background: linear-gradient(180deg, rgba(6, 16, 28, 0.92), rgba(12, 30, 53, 0.78));
+    backdrop-filter: blur(10px);
+  }
+
+  .site-header .page-link,
+  .site-header #loginArea {
+    color: var(--ivory);
+  }
+
+  .site-header .page-link:hover,
+  .site-header #loginArea:hover {
+    color: var(--gold-light);
+  }
+
+  .page-content > .wrapper {
+    max-width: none;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* Animated ocean background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 100%, #163352 0%, transparent 70%),
+      radial-gradient(ellipse 100% 40% at 20% 80%, #0c2a45 0%, transparent 60%),
+      linear-gradient(180deg, #06101c 0%, #0c1e35 40%, #163352 70%, #1b4060 100%);
+    z-index: 0;
+  }
+
+  /* Wave lines */
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: 0;
+    left: -10%;
+    width: 120%;
+    height: 35%;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 22px,
+      rgba(196, 161, 80, 0.05) 22px,
+      rgba(196, 161, 80, 0.05) 23px
+    );
+    z-index: 0;
+    animation: drift 18s linear infinite alternate;
+    transform-origin: center bottom;
+  }
+
+  @keyframes drift {
+    from { transform: skewX(-1deg) translateX(-2%); }
+    to { transform: skewX(1deg) translateX(2%); }
+  }
+
+  .ocean-star {
+    position: fixed;
+    border-radius: 50%;
+    background: rgba(232, 201, 107, 0.6);
+    animation: twinkle 3s ease-in-out infinite alternate;
+    z-index: 0;
+  }
+
+  @keyframes twinkle {
+    from { opacity: 0.2; transform: scale(0.8); }
+    to { opacity: 0.9; transform: scale(1.2); }
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+  }
+
+  /* Header */
+  header {
+    text-align: center;
+    margin-bottom: 40px;
+    animation: fadeDown 0.8s ease both;
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .header-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
+
+  .rule-line {
+    flex: 1;
+    max-width: 140px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .rule-diamond {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  .rule-diamond-sm {
+    width: 5px; height: 5px;
+    background: var(--gold-dim);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  .tagline {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 900;
+    color: var(--ivory);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-style: italic;
+    color: rgba(232, 217, 197, 0.65);
+    margin-top: 10px;
+    letter-spacing: 0.03em;
+  }
+
+  /* Main layout */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  /* Paper card */
+  .card {
+    background: var(--paper);
+    border-radius: 4px;
+    box-shadow:
+      0 2px 0 var(--gold-dim),
+      0 0 0 1px rgba(201, 168, 76, 0.3),
+      0 24px 60px rgba(6, 16, 28, 0.6),
+      0 4px 12px rgba(6, 16, 28, 0.4);
+    animation: fadeUp 0.7s ease both;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold-light), var(--gold-dim));
+  }
+
+  .card-inner {
+    padding: 28px 28px 24px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card:nth-child(2) { animation-delay: 0.15s; }
+
+  .card-title {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .card-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold-dim), transparent);
+  }
+
+  /* Endpoint section */
+  .endpoint-section {
+    background: rgba(12, 30, 53, 0.06);
+    border: 1px solid rgba(201, 168, 76, 0.25);
+    border-radius: 3px;
+    padding: 12px 14px;
+    margin-bottom: 22px;
+  }
+
+  .endpoint-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .endpoint-section input {
+    width: 100%;
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    border-radius: 2px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,0.7);
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.78rem;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .endpoint-section input:focus {
+    border-color: var(--gold);
+    background: white;
+  }
+
+  .endpoint-hint {
+    font-size: 0.75rem;
+    font-style: italic;
+    color: rgba(61, 46, 24, 0.55);
+    margin-top: 6px;
+  }
+
+  /* Form grid */
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field.full { grid-column: 1 / -1; }
+
+  .field label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .field input,
+  .field select {
+    border: 1px solid rgba(61, 46, 24, 0.22);
+    border-radius: 2px;
+    padding: 9px 11px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--ink);
+    background: rgba(255,255,255,0.8);
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23c9a84c'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 28px;
+  }
+
+  .field input:focus,
+  .field select:focus {
+    border-color: var(--gold);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.12);
+  }
+
+  /* Alone toggle */
+  .alone-row {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid rgba(61, 46, 24, 0.2);
+    border-radius: 2px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.5);
+  }
+
+  .alone-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  /* Custom toggle */
+  .toggle-wrap { position: relative; display: inline-flex; align-items: center; }
+  .toggle-wrap input[type="checkbox"] { opacity: 0; width: 0; height: 0; position: absolute; }
+  .toggle-track {
+    width: 42px; height: 22px;
+    background: rgba(61, 46, 24, 0.2);
+    border-radius: 999px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.25s;
+    border: 1px solid rgba(61, 46, 24, 0.2);
+  }
+  .toggle-thumb {
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 14px; height: 14px;
+    background: var(--ivory-dark);
+    border-radius: 50%;
+    transition: transform 0.25s, background 0.25s;
+  }
+  .toggle-wrap input:checked + .toggle-track { background: var(--gold); }
+  .toggle-wrap input:checked + .toggle-track .toggle-thumb { transform: translateX(20px); background: white; }
+
+  /* Actions */
+  .actions {
+    margin-top: 18px;
+    display: flex;
+    gap: 10px;
+  }
+
+  .btn-predict {
+    flex: 1;
+    background: linear-gradient(135deg, var(--navy-mid), var(--navy));
+    border: 1px solid var(--gold-dim);
+    border-bottom: 2px solid var(--gold-dim);
+    color: var(--ivory);
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 13px 16px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-predict::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(201, 168, 76, 0.12), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .btn-predict:hover { border-color: var(--gold); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(6,16,28,0.3); }
+  .btn-predict:hover::after { opacity: 1; }
+  .btn-predict:active { transform: translateY(0); }
+
+  .btn-reset {
+    background: transparent;
+    border: 1px solid rgba(61, 46, 24, 0.3);
+    color: var(--ink-soft);
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 13px 16px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn-reset:hover { border-color: var(--gold-dim); color: var(--ink); background: rgba(201, 168, 76, 0.06); }
+
+  .status {
+    margin-top: 10px;
+    font-size: 0.82rem;
+    font-style: italic;
+    color: rgba(61, 46, 24, 0.6);
+    min-height: 20px;
+    transition: color 0.3s;
+  }
+  .status.err { color: var(--die); }
+
+  /* Result panel */
+  .result-panel { animation-delay: 0.2s; }
+
+  .verdict-banner {
+    text-align: center;
+    padding: 22px 20px 18px;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.3);
+    margin-bottom: 22px;
+  }
+
+  .verdict-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .big-score {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 900;
+    color: var(--ink);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    transition: color 0.4s;
+  }
+
+  .verdict-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-style: italic;
+    margin-top: 10px;
+    color: var(--ink-soft);
+    transition: color 0.4s;
+    min-height: 1.4em;
+  }
+
+  /* Bars */
+  .bar-section { padding: 0 0 10px; }
+
+  .bar-row {
+    display: grid;
+    grid-template-columns: 68px 1fr 52px;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .bar-tag {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .bar-track {
+    height: 8px;
+    border-radius: 0;
+    background: rgba(61, 46, 24, 0.12);
+    overflow: visible;
+    position: relative;
+  }
+
+  .bar-fill {
+    height: 100%;
+    width: 0;
+    transition: width 700ms cubic-bezier(0.25, 1, 0.5, 1);
+    position: relative;
+  }
+
+  .bar-fill::after {
+    content: '';
+    position: absolute;
+    right: -1px; top: -2px;
+    width: 4px; height: 12px;
+    background: inherit;
+  }
+
+  #surviveFill { background: var(--survive); }
+  #dieFill { background: var(--die-light); }
+
+  .bar-val {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    text-align: right;
+  }
+
+  /* Divider */
+  .art-deco-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 18px 0;
+    opacity: 0.6;
+  }
+
+  .ad-line { flex: 1; height: 1px; background: rgba(61, 46, 24, 0.2); }
+  .ad-diamond { width: 5px; height: 5px; background: var(--gold-dim); transform: rotate(45deg); }
+  .ad-diamond-sm { width: 3px; height: 3px; background: rgba(61, 46, 24, 0.3); transform: rotate(45deg); }
+
+  /* Payload */
+  .payload-section {
+    background: rgba(12, 30, 53, 0.04);
+    border: 1px solid rgba(61, 46, 24, 0.15);
+    border-radius: 2px;
+    padding: 12px 14px;
+  }
+
+  .payload-title {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 8px;
+  }
+
+  pre {
+    font-family: 'Menlo', 'Courier New', monospace;
+    font-size: 0.73rem;
+    color: var(--ink-soft);
+    white-space: pre-wrap;
+    line-height: 1.55;
+  }
+
+  /* Ship silhouette decoration */
+  .ship-deco {
+    text-align: center;
+    margin: 28px 0 8px;
+    opacity: 0.3;
+  }
+
+  .ship-deco svg { width: 120px; }
+
+  /* Responsive */
+  @media (max-width: 860px) {
+    .main-grid { grid-template-columns: 1fr; }
+    .result-panel { order: -1; }
+  }
+
+  @media (max-width: 480px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .field.full { grid-column: 1; }
+    .alone-row { grid-column: 1; }
+  }
+
+  /* Loading shimmer on the score */
+  @keyframes shimmer {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+  }
+  .loading .big-score { animation: shimmer 1.2s ease-in-out infinite; }
+</style>
+</head>
+<body>
+
+<!-- Stars -->
+<script>
+  for (let i = 0; i < 40; i++) {
+    const s = document.createElement('div');
+    s.className = 'ocean-star';
+    const size = Math.random() * 2.5 + 0.5;
+    s.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*55}%;left:${Math.random()*100}%;animation-delay:${Math.random()*4}s;animation-duration:${2+Math.random()*3}s`;
+    document.body.appendChild(s);
+  }
+</script>
+
+<div class="wrapper">
+  <header>
+    <div class="ship-deco">
+      <svg viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="20" y="35" width="160" height="12" rx="2" fill="#c9a84c"/>
+        <rect x="60" y="18" width="8" height="18" fill="#c9a84c"/>
+        <rect x="88" y="12" width="8" height="24" fill="#c9a84c"/>
+        <rect x="116" y="16" width="8" height="20" fill="#c9a84c"/>
+        <path d="M40 35 H160 L175 47 H25 Z" fill="#c9a84c"/>
+        <rect x="58" y="22" width="80" height="14" rx="1" fill="#8c7035"/>
+        <circle cx="70" cy="29" r="3" fill="#c9a84c"/>
+        <circle cx="84" cy="29" r="3" fill="#c9a84c"/>
+        <circle cx="98" cy="29" r="3" fill="#c9a84c"/>
+        <circle cx="112" cy="29" r="3" fill="#c9a84c"/>
+        <circle cx="126" cy="29" r="3" fill="#c9a84c"/>
+      </svg>
+    </div>
+    <div class="header-rule">
+      <div class="rule-line"></div>
+      <div class="rule-diamond-sm"></div>
+      <div class="rule-diamond"></div>
+      <div class="rule-diamond-sm"></div>
+      <div class="rule-line"></div>
+    </div>
+    <p class="tagline">R.M.S. Titanic · April 1912</p>
+    <h1>Would You Have <em>Survived?</em></h1>
+    <p class="subtitle">A machine learning inquiry into fate upon the North Atlantic</p>
+  </header>
+
+  <div class="main-grid">
+
+    <!-- Left: Input form -->
+    <div class="card">
+      <div class="card-inner">
+        <div class="card-title">Passenger Manifest</div>
+
+        <div class="endpoint-section">
+          <span class="endpoint-label">API Endpoint</span>
+          <input id="endpointInput" type="text" autocomplete="off" spellcheck="false">
+          <p class="endpoint-hint">Auto-detection tries common local ports if the selected URL fails.</p>
+        </div>
+
+        <form id="titanicForm">
+          <div class="form-grid">
+
+            <div class="field full">
+              <label for="name">Passenger Name</label>
+              <input id="name" name="name" type="text" value="John Mortensen" required>
+            </div>
+
+            <div class="field">
+              <label for="pclass">Class</label>
+              <select id="pclass" name="pclass">
+                <option value="1">1st Class</option>
+                <option value="2" selected>2nd Class</option>
+                <option value="3">3rd Class</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="sex">Sex</label>
+              <select id="sex" name="sex">
+                <option value="female">Female</option>
+                <option value="male" selected>Male</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="age">Age</label>
+              <input id="age" name="age" type="number" min="0" max="100" step="1" value="66" required>
+            </div>
+
+            <div class="field">
+              <label for="fare">Fare (£)</label>
+              <input id="fare" name="fare" type="number" min="0" step="0.01" value="16.00" required>
+            </div>
+
+            <div class="field">
+              <label for="sibsp">Siblings / Spouses</label>
+              <input id="sibsp" name="sibsp" type="number" min="0" step="1" value="1" required>
+            </div>
+
+            <div class="field">
+              <label for="parch">Parents / Children</label>
+              <input id="parch" name="parch" type="number" min="0" step="1" value="1" required>
+            </div>
+
+            <div class="field full">
+              <label for="embarked">Port of Embarkation</label>
+              <select id="embarked" name="embarked">
+                <option value="C">Cherbourg (C)</option>
+                <option value="Q">Queenstown (Q)</option>
+                <option value="S" selected>Southampton (S)</option>
+              </select>
+            </div>
+
+            <div class="alone-row field full">
+              <span class="alone-label">Travelling Alone</span>
+              <label class="toggle-wrap">
+                <input id="alone" name="alone" type="checkbox">
+                <div class="toggle-track"><div class="toggle-thumb"></div></div>
+              </label>
+            </div>
+
+          </div>
+
+          <div class="actions">
+            <button id="predictBtn" class="btn-predict" type="submit">Predict Fate</button>
+            <button id="resetBtn" class="btn-reset" type="button">Reset</button>
+          </div>
+          <div id="status" class="status"></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Right: Result -->
+    <div class="card result-panel" id="resultCard">
+      <div class="card-inner">
+        <div class="card-title">Fate Assessment</div>
+
+        <div class="verdict-banner" id="verdictBanner">
+          <div class="verdict-label">Survival Probability</div>
+          <div class="big-score" id="bigScore">— %</div>
+          <div class="verdict-text" id="verdictText">Enter passenger data and predict.</div>
+        </div>
+
+        <div class="bar-section">
+          <div class="bar-row">
+            <span class="bar-tag">Survive</span>
+            <div class="bar-track"><div class="bar-fill" id="surviveFill"></div></div>
+            <span class="bar-val" id="survivePct">— %</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-tag">Perish</span>
+            <div class="bar-track"><div class="bar-fill" id="dieFill"></div></div>
+            <span class="bar-val" id="diePct">— %</span>
+          </div>
+        </div>
+
+        <div class="art-deco-divider">
+          <div class="ad-line"></div>
+          <div class="ad-diamond-sm"></div>
+          <div class="ad-diamond"></div>
+          <div class="ad-diamond-sm"></div>
+          <div class="ad-line"></div>
+        </div>
+
+        <div class="payload-section">
+          <div class="payload-title">Request Payload</div>
+          <pre id="payload">Awaiting prediction request…</pre>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const titanicForm = document.getElementById("titanicForm");
+  const statusEl = document.getElementById("status");
+  const endpointInput = document.getElementById("endpointInput");
+  const payloadEl = document.getElementById("payload");
+  const bigScoreEl = document.getElementById("bigScore");
+  const survivePctEl = document.getElementById("survivePct");
+  const diePctEl = document.getElementById("diePct");
+  const surviveFillEl = document.getElementById("surviveFill");
+  const dieFillEl = document.getElementById("dieFill");
+  const verdictTextEl = document.getElementById("verdictText");
+  const verdictBanner = document.getElementById("verdictBanner");
+
+  const localOrigins = new Set([
+    "http://127.0.0.1:4600",
+    "http://localhost:4600",
+    "http://127.0.0.1:4000",
+    "http://localhost:4000"
+  ]);
+  const isLocalDevOrigin =
+    localOrigins.has(location.origin) ||
+    location.hostname === "127.0.0.1" ||
+    location.hostname === "localhost";
+
+  const endpointCandidates = [
+    `${location.origin}/api/titanic/predict`,
+    "http://localhost:8587/api/titanic/predict",
+    "http://127.0.0.1:8587/api/titanic/predict",
+    ...(!isLocalDevOrigin ? [
+      "http://localhost:5000/api/titanic/predict",
+      "http://127.0.0.1:5000/api/titanic/predict",
+      "http://localhost:8000/api/titanic/predict",
+      "http://127.0.0.1:8000/api/titanic/predict"
+    ] : []),
+    ...(!isLocalDevOrigin ? ["https://flask.opencodingsociety.com/api/titanic/predict"] : [])
+  ];
+
+  endpointInput.value = localStorage.getItem("titanic_api_url") || endpointCandidates[0];
+
+  function pct(v) { return `${(v * 100).toFixed(1)}%`; }
+
+  function updateResult(die, survive) {
+    bigScoreEl.textContent = pct(survive);
+    survivePctEl.textContent = pct(survive);
+    diePctEl.textContent = pct(die);
+    surviveFillEl.style.width = `${Math.min(100, survive * 100)}%`;
+    dieFillEl.style.width = `${Math.min(100, die * 100)}%`;
+
+    if (survive >= 0.5) {
+      verdictTextEl.textContent = "The model predicts survival — fortune smiles upon you.";
+      verdictTextEl.style.color = "var(--survive)";
+      bigScoreEl.style.color = "var(--survive)";
+    } else {
+      verdictTextEl.textContent = "The model predicts the passenger did not survive.";
+      verdictTextEl.style.color = "var(--die)";
+      bigScoreEl.style.color = "var(--die)";
+    }
+    verdictBanner.classList.remove("loading");
+  }
+
+  function buildPayload() {
+    return {
+      name: document.getElementById("name").value.trim() || "Anonymous",
+      pclass: Number(document.getElementById("pclass").value),
+      sex: document.getElementById("sex").value,
+      age: Number(document.getElementById("age").value),
+      sibsp: Number(document.getElementById("sibsp").value),
+      parch: Number(document.getElementById("parch").value),
+      fare: Number(document.getElementById("fare").value),
+      embarked: document.getElementById("embarked").value,
+      alone: document.getElementById("alone").checked
+    };
+  }
+
+  async function tryAt(url, payload) {
+    const res = await fetch(url, {
+      method: "POST", mode: "cors", credentials: "omit",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (typeof data.survive !== "number" || typeof data.die !== "number")
+      throw new Error("Unexpected API response shape.");
+    return data;
+  }
+
+  async function runPrediction(statusMsg) {
+    const preferredURL = endpointInput.value.trim();
+    const payload = buildPayload();
+    payloadEl.textContent = JSON.stringify(payload, null, 2);
+    statusEl.textContent = statusMsg || "Consulting the model…";
+    statusEl.classList.remove("err");
+    verdictBanner.classList.add("loading");
+
+    try {
+      const urls = [preferredURL, ...endpointCandidates.filter(u => u !== preferredURL)];
+      let data = null, usedURL = "", lastErr = "unknown error";
+      for (const url of urls) {
+        try { data = await tryAt(url, payload); usedURL = url; break; }
+        catch(e) { lastErr = e.message; }
+      }
+      if (!data) throw new Error(lastErr);
+
+      updateResult(data.die, data.survive);
+      endpointInput.value = usedURL;
+      localStorage.setItem("titanic_api_url", usedURL);
+      statusEl.textContent = `Prediction received via ${usedURL}`;
+    } catch(err) {
+      verdictBanner.classList.remove("loading");
+      const msg = String(err.message || "");
+      const urls = [preferredURL, ...endpointCandidates.filter(u => u !== preferredURL)];
+      const mixedContent = location.protocol === "https:" &&
+        urls.some(u => u.startsWith("http://localhost") || u.startsWith("http://127.0.0.1"));
+      statusEl.classList.add("err");
+      if (msg.toLowerCase().includes("fetch") && mixedContent) {
+        statusEl.textContent = "Blocked: HTTPS page cannot reach HTTP localhost. Open on http:// instead.";
+      } else if (msg.toLowerCase().includes("fetch")) {
+        statusEl.textContent = isLocalDevOrigin
+          ? "Could not reach a local backend endpoint. Start Flask locally or change the endpoint URL."
+          : "Could not reach any backend endpoint. Is your Flask server running?";
+      } else if (msg.includes("HTTP 404")) {
+        statusEl.textContent = "Route /api/titanic/predict returned 404 on the selected backend.";
+      } else {
+        statusEl.textContent = `Error: ${msg}`;
+      }
+    }
+  }
+
+  titanicForm.addEventListener("submit", e => { e.preventDefault(); runPrediction("Consulting the model…"); });
+
+  document.getElementById("resetBtn").addEventListener("click", () => {
+    titanicForm.reset();
+    document.getElementById("name").value = "John Mortensen";
+    document.getElementById("pclass").value = "2";
+    document.getElementById("sex").value = "male";
+    document.getElementById("age").value = "66";
+    document.getElementById("sibsp").value = "1";
+    document.getElementById("parch").value = "1";
+    document.getElementById("fare").value = "16.00";
+    document.getElementById("embarked").value = "S";
+    payloadEl.textContent = "Awaiting prediction request…";
+    bigScoreEl.textContent = "— %";
+    bigScoreEl.style.color = "var(--ink)";
+    survivePctEl.textContent = "— %";
+    diePctEl.textContent = "— %";
+    surviveFillEl.style.width = "0";
+    dieFillEl.style.width = "0";
+    verdictTextEl.textContent = "Enter passenger data and predict.";
+    verdictTextEl.style.color = "var(--ink-soft)";
+    statusEl.textContent = "";
+    statusEl.classList.remove("err");
+  });
+
+  window.addEventListener("DOMContentLoaded", () => runPrediction("Loading default prediction…"));
+</script>
