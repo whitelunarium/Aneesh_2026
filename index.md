@@ -1,9 +1,16 @@
 ---
+<<<<<<< HEAD
 layout: base
 title: I'm Aneesh Deevi
+=======
+layout: post 
+title: Portfolio Home 
+>>>>>>> upstream/main
 hide: true
+show_reading_time: false
 ---
 
+<<<<<<< HEAD
 ### Me and Team
 
 Hi! My name is Aneesh Deevi.
@@ -19,11 +26,15 @@ Hi! My name is Aneesh Deevi.
 
 
 ## Links to Learning
+=======
+Hi! My name is John Mortensen 
+>>>>>>> upstream/main
 
 ### Development Environment
 
 > Coding starts with tools, explore these tools and procedures with a click.
 
+<<<<<<< HEAD
 <a href="https://github.com/Open-Coding-Society/student">
     <img src="https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white" alt="GitHub">
 </a>
@@ -36,6 +47,22 @@ Hi! My name is Aneesh Deevi.
 <a href="https://vscode.dev/" class="button small" style="background-color: #d38a4bff">
     <span style="color: #FFFFFF">VSCODE</span>
 </a>
+=======
+<div style="display: flex; flex-wrap: wrap; gap: 10px;">
+    <a href="https://github.com/Open-Coding-Society/student">
+        <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
+    </a>
+    <a href="https://open-coding-society.github.io/student">
+        <img src="https://img.shields.io/badge/GitHub%20Pages-327FC7?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Pages">
+    </a>
+    <a href="https://kasm.opencodingsociety.com/">
+        <img src="https://img.shields.io/badge/KASM-0078D4?style=for-the-badge&logo=kasm&logoColor=white" alt="KASM">
+    </a>
+    <a href="https://vscode.dev/">
+        <img src="https://img.shields.io/badge/VSCode-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white" alt="VSCode">
+    </a>
+</div>
+>>>>>>> upstream/main
 
 <br>
 
