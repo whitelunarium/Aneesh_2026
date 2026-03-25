@@ -42,6 +42,10 @@ def extract_front_matter(notebook_file, cell):
     return front_matter
 
 
+def has_front_matter(cell):
+    return cell.get("source", "").startswith("---")
+
+
 def get_relative_output_path(notebook_file):
     relative_path = os.path.relpath(notebook_file, notebook_directory)
 
@@ -68,8 +72,15 @@ def fix_js_code_blocks(markdown):
 def convert_notebook_to_markdown_with_front_matter(notebook_file):
     with open(notebook_file, "r", encoding="utf-8") as file:
         notebook = nbformat.read(file, as_version=nbformat.NO_CONVERT)
-        front_matter = extract_front_matter(notebook_file, notebook.cells[0])
-        notebook.cells.pop(0)
+        if not notebook.cells:
+            print(f"Skipping empty notebook: {notebook_file}")
+            error_cleanup(notebook_file)
+            return
+
+        first_cell = notebook.cells[0]
+        front_matter = extract_front_matter(notebook_file, first_cell)
+        if has_front_matter(first_cell):
+            notebook.cells.pop(0)
         process_mermaid_cells(notebook)
         exporter = MarkdownExporter()
         markdown, _ = exporter.from_notebook_node(notebook)
