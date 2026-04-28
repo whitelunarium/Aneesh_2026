@@ -572,7 +572,6 @@ def inject_code_runners(markdown, notebook, front_matter=None):
 def convert_notebook_to_markdown_with_front_matter(notebook_file):
     with open(notebook_file, "r", encoding="utf-8") as file:
         notebook = nbformat.read(file, as_version=nbformat.NO_CONVERT)
-<<<<<<< HEAD
         if not notebook.cells:
             print(f"Skipping empty notebook: {notebook_file}")
             error_cleanup(notebook_file)
@@ -582,24 +581,10 @@ def convert_notebook_to_markdown_with_front_matter(notebook_file):
         front_matter = extract_front_matter(notebook_file, first_cell)
         if has_front_matter(first_cell):
             notebook.cells.pop(0)
-=======
-        front_matter = extract_front_matter(notebook_file, notebook.cells[0])
-        
-        # Get permalink for runner_id generation
         permalink = front_matter.get('permalink', '')
-        
-        notebook.cells.pop(0)
-        
-        # Process code runner cells before conversion
         notebook = process_code_runner_cells(notebook, permalink)
-        
-        # Process ui runner cells before conversion
         notebook = process_ui_runner_cells(notebook, permalink)
-        
-        # Process game runner cells before conversion
         notebook = process_game_runner_cells(notebook, permalink)
-        
->>>>>>> upstream/main
         process_mermaid_cells(notebook)
         exporter = MarkdownExporter()
         markdown, _ = exporter.from_notebook_node(notebook)
