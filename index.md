@@ -63,155 +63,128 @@ Hi! My name is Aneesh Deevi.
   .unit-converter-home * { box-sizing: border-box; }
 
   .unit-converter-home {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: #f5f4f0;
-    color: #1a1a1a;
-    border-radius: 18px;
-    padding: 2rem 1rem;
-    margin: 1rem 0 2rem;
+    font-family: Arial, sans-serif;
+    background: #f7f2e8;
+    color: #222;
+    border: 2px solid #d8cdbd;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 16px 0 28px;
   }
 
-  .unit-converter-home .wrap { width: 100%; max-width: 580px; margin: 0 auto; }
-
-  .unit-converter-home .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
+  .unit-converter-home .converter-box {
+    max-width: 620px;
+    margin: 0 auto;
   }
 
-  .unit-converter-home .app-title { font-size: 15px; font-weight: 500; }
-
-  .unit-converter-home .badge {
-    font-size: 12px;
-    background: #dbeafe;
-    color: #1d4ed8;
-    padding: 3px 10px;
-    border-radius: 8px;
+  .unit-converter-home h3 {
+    margin: 0 0 6px;
+    font-size: 24px;
   }
 
-  .unit-converter-home .category-row {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 1.5rem;
-  }
-
-  .unit-converter-home .cat-btn {
-    flex: 1;
-    padding: 9px 0;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background: #ebebea;
-    color: #555;
-    font-size: 13px;
-    cursor: pointer;
-    font-family: inherit;
-    transition: all .15s;
-    text-transform: capitalize;
-  }
-
-  .unit-converter-home .cat-btn:hover { background: #e0dfde; }
-
-  .unit-converter-home .cat-btn.active {
-    background: #1a1a1a;
-    color: #fff;
-    border-color: transparent;
-  }
-
-  .unit-converter-home .input-row {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-bottom: 1.5rem;
-  }
-
-  .unit-converter-home .input-row input[type="number"] {
-    flex: 1;
-    font-size: 22px;
-    padding: 10px 14px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background: #fff;
-    color: #1a1a1a;
-    font-family: inherit;
-    outline: none;
-  }
-
-  .unit-converter-home .input-row input[type="number"]:focus { border-color: #888; }
-
-  .unit-converter-home .from-select {
-    padding: 10px 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background: #fff;
-    color: #1a1a1a;
+  .unit-converter-home .converter-note {
+    margin: 0 0 16px;
+    color: #5b5248;
     font-size: 14px;
-    font-family: inherit;
-    cursor: pointer;
-    outline: none;
   }
 
-  .unit-converter-home .results-grid {
+  .unit-converter-home .mode-row,
+  .unit-converter-home .top-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .unit-converter-home .mode-btn {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #b8aa96;
+    border-radius: 8px;
+    background: #efe7da;
+    color: #3e352c;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .unit-converter-home .mode-btn.current {
+    background: #3f352d;
+    color: #fff;
+    border-color: #3f352d;
+  }
+
+  .unit-converter-home input,
+  .unit-converter-home select {
+    border: 1px solid #b8aa96;
+    border-radius: 8px;
+    padding: 11px 12px;
+    background: #fffdf8;
+    color: #222;
+    font-size: 16px;
+  }
+
+  .unit-converter-home input {
+    flex: 1.3;
+  }
+
+  .unit-converter-home select {
+    flex: 1;
+  }
+
+  .unit-converter-home .results {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 10px;
   }
 
-  .unit-converter-home .result-card {
-    background: #ebebea;
+  .unit-converter-home .result {
+    background: #efe7da;
     border-radius: 8px;
-    padding: 14px 16px;
+    padding: 12px;
   }
 
-  .unit-converter-home .result-card.from-unit {
-    background: #fff;
-    border: 1px solid #aaa;
+  .unit-converter-home .result.source {
+    background: #fffdf8;
+    border: 1px solid #b8aa96;
   }
 
-  .unit-converter-home .result-val {
-    font-size: 20px;
-    font-weight: 500;
-    color: #1a1a1a;
-    margin-bottom: 2px;
+  .unit-converter-home .number {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
   }
 
-  .unit-converter-home .result-unit { font-size: 13px; color: #666; }
+  .unit-converter-home .label {
+    font-size: 13px;
+    color: #64584d;
+  }
 
   @media (max-width: 640px) {
-    .unit-converter-home .input-row,
-    .unit-converter-home .category-row {
+    .unit-converter-home .mode-row,
+    .unit-converter-home .top-row {
       flex-direction: column;
-    }
-
-    .unit-converter-home .cat-btn,
-    .unit-converter-home .from-select,
-    .unit-converter-home .input-row input[type="number"] {
-      width: 100%;
     }
   }
 </style>
 
 <div class="unit-converter-home">
-  <div class="wrap">
-    <div class="header">
-      <span class="app-title">Unit Converter</span>
-      <span class="badge">AP CSP Create PT</span>
+  <div class="converter-box">
+    <h3>Unit Converter</h3>
+    <p class="converter-note">Pick a type, enter a value, and it converts to the rest.</p>
+
+    <div class="mode-row" id="unit-converter-cats"></div>
+
+    <div class="top-row">
+      <input type="number" id="unit-converter-val-input" value="1" placeholder="Type a number" />
+      <select id="unit-converter-from-select"></select>
     </div>
 
-    <div class="category-row" id="unit-converter-cats"></div>
-
-    <div class="input-row">
-      <input type="number" id="unit-converter-val-input" value="1" placeholder="Enter value" />
-      <select class="from-select" id="unit-converter-from-select"></select>
-    </div>
-
-    <div class="results-grid" id="unit-converter-results-grid"></div>
+    <div class="results" id="unit-converter-results-grid"></div>
   </div>
 </div>
 
 <script>
   (() => {
-    const categories = {
+    const unitGroups = {
       length: [
         { name: "meters", symbol: "m", toBase: 1 },
         { name: "kilometers", symbol: "km", toBase: 1000 },
@@ -233,102 +206,104 @@ Hi! My name is Aneesh Deevi.
       ]
     };
 
-    function convert(value, fromUnit, category) {
-      const results = [];
-      const units = categories[category];
+    function convertValue(amount, fromUnit, groupName) {
+      const output = [];
+      const units = unitGroups[groupName];
 
-      if (category === "temperature") {
+      if (groupName === "temperature") {
         let celsius;
-        if (fromUnit.symbol === "°C") celsius = value;
-        else if (fromUnit.symbol === "°F") celsius = (value - 32) * 5 / 9;
-        else celsius = value - 273.15;
+        if (fromUnit.symbol === "°C") celsius = amount;
+        else if (fromUnit.symbol === "°F") celsius = (amount - 32) * 5 / 9;
+        else celsius = amount - 273.15;
 
         for (let i = 0; i < units.length; i++) {
-          let converted;
-          if (units[i].symbol === "°C") converted = celsius;
-          else if (units[i].symbol === "°F") converted = celsius * 9 / 5 + 32;
-          else converted = celsius + 273.15;
-          results.push({ unit: units[i], value: converted });
+          let nextValue;
+          if (units[i].symbol === "°C") nextValue = celsius;
+          else if (units[i].symbol === "°F") nextValue = celsius * 9 / 5 + 32;
+          else nextValue = celsius + 273.15;
+          output.push({ unit: units[i], value: nextValue });
         }
       } else {
-        const baseValue = value * fromUnit.toBase;
+        const baseAmount = amount * fromUnit.toBase;
 
         for (let i = 0; i < units.length; i++) {
-          const converted = baseValue / units[i].toBase;
-          results.push({ unit: units[i], value: converted });
+          output.push({
+            unit: units[i],
+            value: baseAmount / units[i].toBase
+          });
         }
       }
 
-      return results;
+      return output;
     }
 
-    let activeCategory = "length";
-    let activeFromIndex = 0;
+    let currentGroup = "length";
+    let currentUnitIndex = 0;
 
-    const valInput = document.getElementById("unit-converter-val-input");
-    const fromSelect = document.getElementById("unit-converter-from-select");
-    const resultsGrid = document.getElementById("unit-converter-results-grid");
-    const catsDiv = document.getElementById("unit-converter-cats");
+    const numberInput = document.getElementById("unit-converter-val-input");
+    const unitSelect = document.getElementById("unit-converter-from-select");
+    const resultsBox = document.getElementById("unit-converter-results-grid");
+    const buttonRow = document.getElementById("unit-converter-cats");
 
-    function formatNum(n) {
-      if (Math.abs(n) >= 0.01 && Math.abs(n) < 1e7) {
-        return parseFloat(n.toFixed(4)).toString();
+    function prettyNumber(num) {
+      if (Math.abs(num) >= 0.01 && Math.abs(num) < 10000000) {
+        return parseFloat(num.toFixed(4)).toString();
       }
-      return n.toExponential(3);
+      return num.toExponential(3);
     }
 
-    function render() {
-      const value = parseFloat(valInput.value) || 0;
-      const units = categories[activeCategory];
-      const fromUnit = units[activeFromIndex];
-      const results = convert(value, fromUnit, activeCategory);
+    function drawResults() {
+      const amount = parseFloat(numberInput.value) || 0;
+      const units = unitGroups[currentGroup];
+      const fromUnit = units[currentUnitIndex];
+      const converted = convertValue(amount, fromUnit, currentGroup);
 
-      resultsGrid.innerHTML = results.map((r) => {
-        const isFrom = r.unit === fromUnit;
+      resultsBox.innerHTML = converted.map((item) => {
+        const sourceClass = item.unit === fromUnit ? " source" : "";
         return `
-          <div class="result-card${isFrom ? " from-unit" : ""}">
-            <div class="result-val">${formatNum(r.value)}</div>
-            <div class="result-unit">${r.unit.name} (${r.unit.symbol})</div>
+          <div class="result${sourceClass}">
+            <div class="number">${prettyNumber(item.value)}</div>
+            <div class="label">${item.unit.name} (${item.unit.symbol})</div>
           </div>
         `;
       }).join("");
     }
 
-    function buildCategoryButtons() {
-      catsDiv.innerHTML = Object.keys(categories).map((cat) => `
-        <button class="cat-btn${cat === activeCategory ? " active" : ""}" data-cat="${cat}">
-          ${cat}
+    function drawButtons() {
+      buttonRow.innerHTML = Object.keys(unitGroups).map((group) => `
+        <button class="mode-btn${group === currentGroup ? " current" : ""}" data-group="${group}">
+          ${group}
         </button>
       `).join("");
 
-      catsDiv.querySelectorAll(".cat-btn").forEach((btn) => {
+      buttonRow.querySelectorAll(".mode-btn").forEach((btn) => {
         btn.addEventListener("click", () => {
-          activeCategory = btn.dataset.cat;
-          activeFromIndex = 0;
-          buildCategoryButtons();
-          buildFromSelect();
-          render();
+          currentGroup = btn.dataset.group;
+          currentUnitIndex = 0;
+          drawButtons();
+          drawSelect();
+          drawResults();
         });
       });
     }
 
-    function buildFromSelect() {
-      const units = categories[activeCategory];
-      fromSelect.innerHTML = units.map((u, i) => `
+    function drawSelect() {
+      const units = unitGroups[currentGroup];
+      unitSelect.innerHTML = units.map((u, i) => `
         <option value="${i}">${u.name} (${u.symbol})</option>
       `).join("");
-      fromSelect.value = activeFromIndex;
+      unitSelect.value = currentUnitIndex;
     }
 
-    fromSelect.addEventListener("change", () => {
-      activeFromIndex = parseInt(fromSelect.value, 10);
-      render();
+    unitSelect.addEventListener("change", () => {
+      currentUnitIndex = parseInt(unitSelect.value, 10);
+      drawResults();
     });
 
-    valInput.addEventListener("input", render);
+    numberInput.addEventListener("input", drawResults);
 
-    buildCategoryButtons();
-    buildFromSelect();
-    render();
+    drawButtons();
+    drawSelect();
+    drawResults();
   })();
 </script>
